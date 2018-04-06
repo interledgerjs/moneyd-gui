@@ -9,11 +9,11 @@ html
     script(src="/index.js")
   body
     nav.navbar.navbar-dark.sticky-top.bg-dark.flex-md-nowrap.p-0
-      a.navbar-brand.col-sm-3.col-md-2.mr-0(href="#") Moneyd <span class="text-muted">GUI</span>
+      a.navbar-brand.col-sm-3.col-md-2.mr-0(href="/") Moneyd <span class="text-muted">GUI</span>
       input.form-control.form-control-dark.w-100(type="text" placeholder="Search" aria-label="Search")
       ul.navbar-nav.px-3
         li.nav-item.text-nowrap
-          a.nav-link(href="#") Sign out
+          a.nav-link(onclick="reload_view()") Refresh
     .container-fluid
       .row
         nav.col-md-2.d-none.d-md-block.bg-light.sidebar
@@ -21,11 +21,11 @@ html
             h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted Actions
             ul.nav.flex-column
               li.nav-item
-                a.nav-link(href="#")
+                a.nav-link(onclick="load_view('send')")
                   span.fas.fa-dollar-sign
                   span &nbsp; Send
               li.nav-item
-                a.nav-link(href="#")
+                a.nav-link(onclick="load_view('receive')")
                   span.fas.fa-piggy-bank
                   span &nbsp; Receive
             h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted Information
