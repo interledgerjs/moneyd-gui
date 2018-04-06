@@ -12,7 +12,6 @@
 git clone git@github.com:sharafian/moneyd-gui.git
 cd moneyd-gui
 npm install
-npm run build
 npm start
 ```
 
