@@ -21,6 +21,7 @@ class IndexController {
       let locals = {}
       if (ctx.params.command in Admin.ADMIN_COMMANDS) {
         locals = await this.admin.query(ctx.params.command)
+        locals._root = Object.assign({}, locals)
       }
 
       await ctx.render(ctx.params.command, locals)
