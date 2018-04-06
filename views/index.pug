@@ -9,7 +9,11 @@ html
     script(src="/index.js")
   body
     nav.navbar.navbar-dark.sticky-top.bg-dark.flex-md-nowrap.p-0
-      a.navbar-brand.col-sm-3.col-md-2.mr-0(href="/") Moneyd <span class="text-muted">GUI</span>
+      a.navbar-brand.col-sm-3.col-md-2.mr-0.d-inline-flex.p-2.justify-content-between(href="/")
+        span.p-1
+          span Moneyd&nbsp;
+          span.text-muted GUI
+        span.p-1#network
       input.form-control.form-control-dark.w-100(type="text" placeholder="Search" aria-label="Search")
       ul.navbar-nav.px-3
         li.nav-item.text-nowrap

@@ -12,6 +12,11 @@ class IndexController {
       await ctx.render('index')
     })
 
+    router.get('/actions/index/my_address', async ctx => {
+      const { address } = await this.admin.query('accounts')
+      ctx.body = { address } 
+    })
+
     router.get('/api/:command', async ctx => {
       let locals = {}
       if (ctx.params.command in Admin.ADMIN_COMMANDS) {

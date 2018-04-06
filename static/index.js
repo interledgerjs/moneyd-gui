@@ -30,5 +30,31 @@ window.addEventListener('load', function () {
     return load_view(window.location.hash.substring(1) || 'status')
   }
 
+  window.load_network = async function () {
+    const network = document.getElementById('network')
+    const res = await fetch('/actions/index/my_address')
+    const json = await res.json()
+
+    let tag = 'Private'
+    let color = 'secondary'
+
+    if (json.address.startsWith('g.')) {
+      tag = 'Livenet'
+      color = 'info'
+    }
+
+    if (json.address.startsWith('test.')) {
+      tag = 'Testnet'
+      color = 'success'
+    }
+
+    const badge = document.createElement('span')
+    badge.className = 'badge p-1 align-self-center badge-' + color
+    badge.innerHTML = tag
+
+    network.appendChild(badge)
+  }
+
+  window.load_network()
   window.load_view(active)
 })
