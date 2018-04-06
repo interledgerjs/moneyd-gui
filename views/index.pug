@@ -1,0 +1,57 @@
+html
+  head
+    meta(charset="utf-8")
+    script(defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous")
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous")
+    |<style>
+    include dashboard.css
+    |</style>
+    script(src="/index.js")
+  body
+    nav.navbar.navbar-dark.sticky-top.bg-dark.flex-md-nowrap.p-0
+      a.navbar-brand.col-sm-3.col-md-2.mr-0(href="#") Moneyd
+      input.form-control.form-control-dark.w-100(type="text" placeholder="Search" aria-label="Search")
+      ul.navbar-nav.px-3
+        li.nav-item.text-nowrap
+          a.nav-link(href="#") Sign out
+    .container-fluid
+      .row
+        nav.col-md-2.d-none.d-md-block.bg-light.sidebar
+          .sidebar-sticky
+            h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted Actions
+            ul.nav.flex-column
+              li.nav-item
+                a.nav-link(href="#")
+                  span.fas.fa-dollar-sign
+                  span &nbsp; Send
+              li.nav-item
+                a.nav-link(href="#")
+                  span.fas.fa-piggy-bank
+                  span &nbsp; Receive
+            h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted Information
+            ul.nav.flex-column
+              li.nav-item
+                a#status.nav-link(href="#")
+                  span.fas.fa-chart-pie
+                  span &nbsp; Status
+              li.nav-item
+                a#routing.nav-link(onclick="load_view('routing')")
+                  span.fas.fa-table
+                  span &nbsp; Routing Table
+              li.nav-item
+                a#accounts.nav-link(onclick="load_view('accounts')")
+                  span.fas.fa-users
+                  span &nbsp; Plugin Info
+              li.nav-item
+                a#balance.nav-link(href="#")
+                  span.fas.fa-link
+                  span &nbsp; Peer Balances
+              li.nav-item
+                a#rates.nav-link(href="#")
+                  span.fas.fa-link
+                  span &nbsp; Exchange Rates
+              li.nav-item
+                a#stats.nav-link(href="#")
+                  span.fas.fa-link
+                  span &nbsp; Statistics
+        main#main.col-md-9.ml-sm-auto.col-lg-10.pt-3.px-4(role="main")

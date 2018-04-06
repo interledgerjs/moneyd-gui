@@ -1,0 +1,56 @@
+h2 Routing Table
+br
+h5.text-muted Overview
+.table-responsive
+  table.table.table-striped.table-sm
+    thead
+      tr
+        th Field
+        th Value
+    tbody
+      tr
+        td Routing Table ID
+        td #{routingTableId}
+      tr
+        td Current Epoch
+        td #{currentEpoch}
+      tr
+        td # Peers
+        td #{Object.keys(peers).length}
+      tr
+        td # Routes
+        td #{Object.keys(localRoutingTable).length}
+br
+h5.text-muted Peers
+.table-responsive
+  table.table.table-striped.table-sm
+    thead
+      tr
+        th Name
+        th Epoch (Send)
+        th Mode (Send)
+        th Epoch (Receive)
+        th ID (Receive)
+    tbody
+      each val, index in peers
+        tr
+          td= index
+          td= val.send.epoch
+          td= val.send.mode
+          td= val.receive.epoch
+          td= val.receive.routingTableId
+br
+h5.text-muted Routes 
+.table-responsive
+  table.table.table-striped.table-sm
+    thead
+      tr
+        th Prefix
+        th Next Hop
+        th Path
+    tbody
+      each val, index in localRoutingTable
+        tr
+          td= index
+          td= val.nextHop || '(self)'
+          td= val.path

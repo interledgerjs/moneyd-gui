@@ -15,5 +15,15 @@
   "bugs": {
     "url": "https://github.com/sharafian/moneyd-gui/issues"
   },
-  "homepage": "https://github.com/sharafian/moneyd-gui#readme"
+  "homepage": "https://github.com/sharafian/moneyd-gui#readme",
+  "dependencies": {
+    "fs-extra": "^5.0.0",
+    "ilp-plugin": "^3.1.0",
+    "koa": "^2.5.0",
+    "koa-router": "^7.4.0",
+    "koa-views": "^6.1.4",
+    "node-fetch": "^2.1.2",
+    "pug": "^2.0.3",
+    "ws": "^5.1.1"
+  }
 }
