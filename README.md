@@ -4,6 +4,8 @@
 - [Usage](#usage)
 - [TODOs](#todos)
 
+![Screenshot](./screenshot.png)
+
 ## Usage
 
 ```sh
