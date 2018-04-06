@@ -47,7 +47,8 @@
   }
 
   let sendingResetTimeout = null
-  window.sendPayment = async function sendPayment () {
+  window.sendPayment = async function sendPayment (e) {
+    e.preventDefault()
     console.log('preparing to send')
     setSendingInfo()
 
