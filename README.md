@@ -2,6 +2,7 @@
 > A GUI for Moneyd
 
 - [Usage](#usage)
+- [Environment Variables](#environment-variables)
 - [TODOs](#todos)
 - [More Screenshots](#more-screenshots)
 
@@ -16,7 +17,16 @@ npm install
 npm start
 ```
 
+Make sure you start Moneyd with `--admin-api-port 7769`.
+
 Then go to [localhost:7770](http://localhost:7770) in your browser.
+
+## Environment Variables
+
+| Variable | Default | Purpose |
+|:--|:--|:--|
+| `PORT` | 7770 | Port to host the GUI's webserver on |
+| `ADMIN_API_PORT` | 7769 | Port for moneyd's admin API. Set with `--admin-api-port` in moneyd |
 
 ## TODOs
 
@@ -25,7 +35,8 @@ Then go to [localhost:7770](http://localhost:7770) in your browser.
 - [ ] better 500 page (instruct to turn on moneyd with flag)
 - [ ] health check for moneyd by using plugin btp?
 - [ ] ping tool
-- [ ] send tool
+- [x] network indicator
+- [x] send tool
 - [ ] receive tool
 - [x] implement statistics
 - [ ] align icons and labels properly
