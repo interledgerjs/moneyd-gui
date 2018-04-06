@@ -1,0 +1,48 @@
+|<style>
+include product.css
+|</style>
+.d-md-flex.flex-md-equal.w-100.my-md-3.pl-md-3
+  .bg-dark.mr-md-3.pt-3.px-3.pt-md-5.px-md-5.text-center.text-white.overflow-hidden
+    .bg-dark.mr-md-3.pt-3.px-3.pt-md-5.px-md-5.text-center.text-white.overflow-hidden
+      h2.display-5 Connectivity
+      .my-3.py-3
+        .table-responsive
+          table.table.table-dark
+            thead
+              tr
+                th Name
+                th Balance
+            tbody
+              each val, index in connected
+                tr
+                  td= index
+                  td(class=(val ? 'text-success' : 'text-danger'))= val
+  .bg-light.mr-md-3.pt-3.px-3.pt-md-5.px-md-5.text-center.overflow-hidden
+    .bg-light.mr-md-3.pt-3.px-3.pt-md-5.px-md-5.text-center.overflow-hidden
+      h2.display-5 Balances
+      .my-3.py-3
+        .table-responsive
+          table.table
+            thead
+              tr
+                th Name
+                th Balance
+            tbody
+              each val, index in balances
+                tr
+                  td= index
+                  td= val
+.position-relative.overflow-hidden.p-3.p-md-5.m-md-3.text-center.bg-light
+  h2.display-4 Routing Overview
+  .my-3.py-3
+    .table-responsive
+      table.table
+        thead
+          tr
+            th Prefix
+            th Next Hop
+        tbody
+          each val, index in localRoutingTable
+            tr
+              td= index
+              td= val.nextHop
