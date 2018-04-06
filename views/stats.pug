@@ -1,0 +1,27 @@
+h2 Statistics
+br
+h5.text-muted Counters
+.table-responsive
+  table.table.table-striped.table-sm
+    thead
+      tr
+        th Counter Name
+        th Value
+    tbody
+      each val, index in counters
+        tr
+          td= index
+          td= val
+br
+h5.text-muted Meters
+.table-responsive
+  table.table.table-striped.table-sm
+    thead
+      tr
+        th Meter Name
+        th Value
+    tbody
+      each val, index in meters
+        tr
+          td= index
+          td= val
