@@ -48,4 +48,10 @@ Then go to [localhost:7770](http://localhost:7770) in your browser.
 
 # More Screenshots
 
+#### Send SPSP Payments
+
 ![Sending Page](./screenshots/send.png)
+
+#### View Routing Table Info
+
+![Routing Page](./screenshots/routing.png)
