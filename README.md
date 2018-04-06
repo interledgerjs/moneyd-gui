@@ -3,10 +3,9 @@
 
 - [Usage](#usage)
 - [TODOs](#todos)
+- [More Screenshots](#more-screenshots)
 
 ![Status Page](./screenshots/status.png)
-
-![Sending Page](./screenshots/send.png)
 
 ## Usage
 
@@ -35,3 +34,7 @@ Then go to [localhost:7770](http://localhost:7770) in your browser.
 - [ ] some visualizations?
 - [ ] links to tutorials
 - [ ] web monetization health
+
+# More Screenshots
+
+![Sending Page](./screenshots/send.png)
