@@ -1,0 +1,22 @@
+script(src='/send.js')
+h1 Send
+hr/
+.container
+  .row
+    .col-md-4.order-md-1
+      h4.mb-3 Receiver Info
+      form.needs-validation(novalidate id="receiver-form")
+        .row
+          .col-md-12.mb-3
+            label(for="receiver") Receiver
+            input.form-control(type="text" placeholder="$example.com" id="receiver" required)
+            .invalid-feedback Valid first name is required
+        .mb-3
+          label(for="amount") Amount <span id="currency"><span class="text-muted">Loading Currency...</span></span>
+          input.form-control(type="text" id="amount" placeholder="100" required)
+          .invalid-feedback Valid first name is required
+        hr.mb-3
+        .mb-3
+          .btn.btn-primary.btn-lg.btn-block(id="send" onclick="sendPayment()") Send
+    .col-md-8.order-md-2.overflow-hidden
+      div(id="receiver-details")

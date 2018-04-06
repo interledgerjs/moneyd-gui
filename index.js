@@ -31,7 +31,13 @@ router.get('/', async ctx => {
 
 router.post('/actions/send/query', async ctx => {
   const { receiver } = ctx.request.body
-  const query = await SPSP.query(receiver)
+  let query
+  try {
+    query = await SPSP.query(receiver)
+  } catch (e) {
+    return ctx.throw(400, e.stack)
+  }
+
   query.sharedSecret = query.sharedSecret.toString('base64')
   ctx.body = query
 })
