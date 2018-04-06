@@ -4,7 +4,9 @@
 - [Usage](#usage)
 - [TODOs](#todos)
 
-![Screenshot](./screenshot.png)
+![Status Page](./screenshots/status.png)
+
+![Sending Page](./screenshots/send.png)
 
 ## Usage
 
