@@ -23,6 +23,8 @@ router.get('/api/:command', async ctx => {
   })
 
   const locals = await res.json()
+  locals._root = Object.assign({}, locals) // required for rates
+
   await ctx.render(ctx.params.command, locals)
 })
 

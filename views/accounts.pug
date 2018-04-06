@@ -14,4 +14,23 @@ h5.text-muted Overview
       tr
         td # Plugins
         td #{Object.keys(accounts).length}
-
+h5.text-muted Plugins
+.table-responsive
+  table.table.table-striped.table-sm
+    thead
+      tr
+        th Name
+        th Relation
+        th Plugin
+        th Code
+        th Scale
+        th Connected?
+    tbody
+      each val, index in accounts
+        tr
+          td= index
+          td= val.info.relation
+          td= val.info.plugin
+          td= val.info.assetCode
+          td= val.info.assetScale
+          td= val.connected

@@ -1,0 +1,18 @@
+h2 Peer Balances
+br
+h5.text-muted Peers
+.table-responsive
+  table.table.table-striped.table-sm
+    thead
+      tr
+        th Name
+        th Min
+        th Current
+        th Max
+    tbody
+      each val, index in accounts
+        tr
+          td= index
+          td= val.minimum
+          td= val.balance
+          td= val.maximum

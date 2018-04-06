@@ -1,0 +1,18 @@
+h2 Exchange Rates
+br
+h5.text-muted Peers
+.table-responsive
+  table.table.table-striped.table-sm
+    - const rates = _root
+    - const names = Object.keys(rates)
+    - const table = names.map(x => names.map(y => rates[x][y] || 'N/A'))
+    tbody
+      tr
+        td
+        each name in names
+          th= name
+      each row, index in table
+        tr
+          th= names[index]
+          each cell, index in row
+            td= cell
