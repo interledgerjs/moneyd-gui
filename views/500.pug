@@ -1,0 +1,16 @@
+if error.code === 'ECONNREFUSED'
+  h1 Moneyd Error
+  hr/
+  p A request made by Moneyd GUI has failed. This can occur if the Admin API is not exposed by Moneyd.
+  p To make sure that your Admin API is reachable, run Moneyd with the <code>--admin-api-port #{port}</code> flag.
+  .card
+    .card-body
+      h4 Stack Trace
+      pre #{error.stack}
+else
+  h1 Internal Server Error
+  hr/
+  .card
+    .card-body
+      h4 Stack Trace
+      pre #{error.stack}
