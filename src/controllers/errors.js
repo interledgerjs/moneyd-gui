@@ -1,4 +1,4 @@
-class Errors {
+class ErrorsController {
   constructor (deps) {
   }
 
@@ -27,4 +27,4 @@ class Errors {
   }
 }
 
-module.exports = Errors
+module.exports = ErrorsController

@@ -1,6 +1,7 @@
 const Index = require('./controllers/index')
 const Send = require('./controllers/send')
 const Errors = require('./controllers/errors')
+const Receiver = require('./controllers/receiver')
 const Koa = require('koa')
 const Router = require('koa-router')
 const Parser = require('koa-bodyparser')
@@ -12,6 +13,7 @@ class App {
     this.index = deps(Index)
     this.send = deps(Send)
     this.errors = deps(Errors)
+    this.receiver = deps(Receiver)
 
     this.router = Router()
     this.parser = Parser()
@@ -35,6 +37,7 @@ class App {
 
     await this.index.init(this.router)
     await this.send.init(this.router)
+    await this.receiver.init(this.router)
   }
 }
 

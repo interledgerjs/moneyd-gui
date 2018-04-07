@@ -1,0 +1,19 @@
+script(src='/receive.js')
+h1 Receive
+hr/
+p Use an SPSP tool, such as the <a href="#send">Send Page</a> to send to the SPSP endpoint below. You can use this URL in place of a payment pointer. The log below displays all the Interledger packets that have been received. This data is not persisted in the current version of Moneyd GUI.
+h5 <code>http://localhost:7770/pay</code>
+br
+h4 Incoming Packet Log
+.table-responsive
+  table.table.table-striped.table-sm
+    thead
+      tr
+        th Date
+        th ID
+        th Amount
+    tbody#packets
+      tr
+        td.text-muted Nothing Here Yet
+        td
+        td

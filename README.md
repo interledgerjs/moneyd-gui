@@ -37,7 +37,7 @@ Then go to [localhost:7770](http://localhost:7770) in your browser.
 - [ ] ping tool
 - [x] network indicator
 - [x] send tool
-- [ ] receive tool
+- [x] receive tool
 - [x] implement statistics
 - [ ] align icons and labels properly
 - [ ] highlight selected item in nav
@@ -55,3 +55,7 @@ Then go to [localhost:7770](http://localhost:7770) in your browser.
 #### View Routing Table Info
 
 ![Routing Page](./screenshots/routing.png)
+
+#### Receive SPSP Payments
+
+![Receiving Page](./screenshots/receive.png)
