@@ -46,6 +46,20 @@
     send.innerHTML = 'Send'
   }
 
+  function setStatusCard (html) {
+    const card = document.createElement('div')
+    const cardBody = document.createElement('div')
+
+    card.className = 'card'
+    cardBody.className = 'card-body'
+
+    cardBody.innerHTML = html
+    receiverDetails.innerHTML = ''
+
+    card.appendChild(cardBody)
+    receiverDetails.appendChild(card)
+  }
+
   let sendingResetTimeout = null
   window.sendPayment = async function sendPayment (e) {
     e.preventDefault()
@@ -67,6 +81,10 @@
         setSendingSuccess()
       } else {
         setSendingFailure()
+        setStatusCard(`
+          <h4 class="text-danger">Sending Error</h4>
+          <pre style="overflow-x: hidden"><code class="text-danger">${ json.stack }</code></pre>
+        `)
       }
     } catch (e) {
       setSendingFailure()
@@ -76,20 +94,6 @@
     sendingResetTimeout = setTimeout(function () {
       resetSending()
     }, 2000)
-  }
-
-  function setStatusCard (html) {
-    const card = document.createElement('div')
-    const cardBody = document.createElement('div')
-
-    card.className = 'card'
-    cardBody.className = 'card-body'
-
-    cardBody.innerHTML = html
-    receiverDetails.innerHTML = ''
-
-    card.appendChild(cardBody)
-    receiverDetails.appendChild(card)
   }
 
   receiver.addEventListener('focusout', async function () {

@@ -39,6 +39,7 @@ class SendController {
           sourceAmount: amount
         })
       } catch (e) {
+        ctx.status = 400
         ctx.body = {
           success: false,
           message: e.message,
