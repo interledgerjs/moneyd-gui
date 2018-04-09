@@ -2,6 +2,7 @@ const Index = require('./controllers/index')
 const Send = require('./controllers/send')
 const Errors = require('./controllers/errors')
 const Receiver = require('./controllers/receiver')
+const PubSub = require('./lib/pubsub')
 const Koa = require('koa')
 const Router = require('koa-router')
 const Parser = require('koa-bodyparser')
@@ -14,6 +15,7 @@ class App {
     this.send = deps(Send)
     this.errors = deps(Errors)
     this.receiver = deps(Receiver)
+    this.pubsub = deps(PubSub)
 
     this.router = Router()
     this.parser = Parser()
@@ -28,13 +30,14 @@ class App {
   async listen () {
     await this.errors.init(this.app)
 
-    this.app
+    const server = this.app
       .use(this.parser)
       .use(this.views)
       .use(this.router.routes())
       .use(this.router.allowedMethods())
       .listen(process.env.PORT || 7770)
 
+    await this.pubsub.init(server)
     await this.index.init(this.router)
     await this.send.init(this.router)
     await this.receiver.init(this.router)
