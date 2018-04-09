@@ -11,17 +11,16 @@ class ErrorsController {
           ctx.status = 404
         }
       } catch (error) {
-        if (ctx.status === 500) {
-          if (error.code === 'ENOENT') {
-            await ctx.render('404', { url: ctx.url })
-            ctx.status = 404
-            return
-          }
-          await ctx.render('500', { error, port: (process.env.ADMIN_API_PORT || 7769) })
-          ctx.status = 500
-        } else {
+        if (error.code == 400) {
           throw error
         }
+        if (error.code === 'ENOENT') {
+          await ctx.render('404', { url: ctx.url })
+          ctx.status = 404
+          return
+        }
+        await ctx.render('500', { error, port: (process.env.ADMIN_API_PORT || 7769) })
+        ctx.status = 500
       }
     })
   }
