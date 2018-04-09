@@ -25,6 +25,10 @@ html
             h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted Actions
             ul.nav.flex-column
               li.nav-item
+                a.nav-link(onclick="load_view('ping')")
+                  span.fas.fa-map-pin
+                  span &nbsp; Ping
+              li.nav-item
                 a.nav-link(onclick="load_view('send')")
                   span.fas.fa-dollar-sign
                   span &nbsp; Send

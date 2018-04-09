@@ -1,0 +1,16 @@
+script(src='/ping.js')
+h1 Ping
+hr/
+.container
+  .row
+    .col-md-4.order-md-1
+      form.needs-validation(novalidate id="destination-form")
+        .row
+          .col-md-12.mb-3
+            label(for="destination") Destination
+            input.form-control(type="text" placeholder="example.alice" id="destination" required)
+            .invalid-feedback Valid ILP address is required
+        .mb-3
+          button.btn.btn-primary.btn-lg.btn-block(id="ping" onclick="sendPing(event)") Ping
+    .col-md-8.order-md-2.overflow-hidden
+      div(id="destination-details")

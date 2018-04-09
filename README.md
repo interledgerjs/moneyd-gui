@@ -37,7 +37,7 @@ Then go to [localhost:7770](http://localhost:7770) in your browser.
 - [x] better 404 page
 - [x] better 500 page (instruct to turn on moneyd with flag)
 - [ ] health check for moneyd by using plugin btp?
-- [ ] ping tool
+- [x] ping tool
 - [x] network indicator
 - [x] send tool
 - [x] receive tool

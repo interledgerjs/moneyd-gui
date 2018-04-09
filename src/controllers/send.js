@@ -18,7 +18,9 @@ class SendController {
       try {
         query = await SPSP.query(receiver)
       } catch (e) {
-        return ctx.throw(400, e.stack)
+        ctx.status = 400
+        ctx.body = e.stack 
+        return
       }
 
       query.sharedSecret = query.sharedSecret.toString('base64')
@@ -27,7 +29,12 @@ class SendController {
 
     router.post('/actions/send/currency', async ctx => {
       await plugin.connect()
-      ctx.body = await ILDCP.fetch(plugin.sendData.bind(plugin))
+      try {
+        ctx.body = await ILDCP.fetch(plugin.sendData.bind(plugin))
+      } catch (e) {
+        ctx.status = 400
+        ctx.body = e.stack 
+      }
     })
 
     router.post('/actions/send', async ctx => {

@@ -1,5 +1,6 @@
 const Index = require('./controllers/index')
 const Send = require('./controllers/send')
+const Ping = require('./controllers/ping')
 const Errors = require('./controllers/errors')
 const Receiver = require('./controllers/receiver')
 const PubSub = require('./lib/pubsub')
@@ -13,6 +14,7 @@ class App {
   constructor (deps) {
     this.index = deps(Index)
     this.send = deps(Send)
+    this.ping = deps(Ping)
     this.errors = deps(Errors)
     this.receiver = deps(Receiver)
     this.pubsub = deps(PubSub)
@@ -40,6 +42,7 @@ class App {
     await this.pubsub.init(server)
     await this.index.init(this.router)
     await this.send.init(this.router)
+    await this.ping.init(this.router)
     await this.receiver.init(this.router)
   }
 }
