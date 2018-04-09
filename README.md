@@ -30,6 +30,9 @@ Then go to [localhost:7770](http://localhost:7770) in your browser.
 
 ## TODOs
 
+- [ ] CORS
+- [x] live update on receiver page
+- [ ] live update on balances
 - [ ] spiffier transitions?
 - [x] better 404 page
 - [x] better 500 page (instruct to turn on moneyd with flag)
