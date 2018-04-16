@@ -11,8 +11,8 @@
   console.log('creating force graph')
   const force = d3.layout.force()
     .gravity(0.05)
-    .distance(100)
-    .charge(-100)
+    .distance(150)
+    .charge(-400)
     .size([ width, height ])
 
   console.log('fetching graph data')
@@ -44,8 +44,9 @@
     .attr('class', 'node')
     .call(force.drag)
 
+  const radius = 5
   node.append('circle')
-    .attr('r', '5')
+    .attr('r', radius)
 
   node.append('text')
     .attr('dx', 12)
@@ -60,6 +61,10 @@
       .attr('y2', d => d.target.y)
 
     node
-      .attr('transform', d => `translate(${d.x},${d.y})`)
+      .attr('transform', d => {
+        const nx = Math.max(radius, Math.min(width - radius, d.x))
+        const ny = Math.max(radius, Math.min(height - radius, d.y))
+        return `translate(${nx},${ny})`
+      })
   })
 })()
