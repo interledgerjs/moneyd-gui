@@ -1,6 +1,7 @@
 const Index = require('./controllers/index')
 const Send = require('./controllers/send')
 const Ping = require('./controllers/ping')
+const Graph = require('./controllers/graph')
 const Errors = require('./controllers/errors')
 const Receiver = require('./controllers/receiver')
 const PubSub = require('./lib/pubsub')
@@ -18,6 +19,7 @@ class App {
     this.errors = deps(Errors)
     this.receiver = deps(Receiver)
     this.pubsub = deps(PubSub)
+    this.graph = deps(Graph)
 
     this.router = Router()
     this.parser = Parser()
@@ -43,6 +45,7 @@ class App {
     await this.index.init(this.router)
     await this.send.init(this.router)
     await this.ping.init(this.router)
+    await this.graph.init(this.router)
     await this.receiver.init(this.router)
   }
 }
