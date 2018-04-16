@@ -62,3 +62,10 @@ Then go to [localhost:7770](http://localhost:7770) in your browser.
 #### Receive SPSP Payments
 
 ![Receiving Page](./screenshots/receive.png)
+
+#### Network Graph
+
+_The network graph is a visualization of your node's routing table. It doesn't
+represent a complete view of the network._
+
+![Network Graph](./screenshots/graph.png)
