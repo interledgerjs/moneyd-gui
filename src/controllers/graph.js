@@ -41,6 +41,7 @@ class GraphController {
                 target: groups[hop],
                 weight: 1
               })
+              last = hop
             }
           } else {
             console.log('setting link with no path, target=' + groups[dest])
