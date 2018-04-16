@@ -2,6 +2,7 @@ html
   head
     meta(charset="utf-8")
     script(defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous")
+    script(src='http://d3js.org/d3.v2.min.js?2.9.3')
     link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous")
     |<style>
     include dashboard.css
@@ -42,6 +43,10 @@ html
                 a#status.nav-link(onclick="load_view('status')")
                   span.fas.fa-chart-pie
                   span &nbsp; Status
+              li.nav-item
+                a#graph.nav-link(onclick="load_view('graph')")
+                  span.fas.fa-code-branch
+                  span &nbsp; Network Graph
               li.nav-item
                 a#routing.nav-link(onclick="load_view('routing')")
                   span.fas.fa-table

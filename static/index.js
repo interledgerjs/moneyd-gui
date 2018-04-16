@@ -21,8 +21,10 @@ window.addEventListener('load', function () {
       newScript.src = script.src
       newScript.innerHTML = script.innerHTML
       console.log(newScript)
-      script.parentNode.appendChild(newScript)
-      script.parentNode.removeChild(script)
+      setTimeout(() => {
+        script.parentNode.appendChild(newScript)
+        script.parentNode.removeChild(script)
+      })
     }
   }
 
