@@ -29,11 +29,8 @@ class GraphController {
 
           const pathString = table.localRoutingTable[dest].path
           const path = pathString ? pathString.split(' ') : []
-          console.log(path)
 
-          console.log(graph.nodes, graph.links, groups, groups[address], groups[dest])
           if (path.length) {
-            console.log('setting link with path. dest=' + dest)
             let last = address
             for (const hop of path) {
               graph.links.push({
@@ -44,7 +41,6 @@ class GraphController {
               last = hop
             }
           } else {
-            console.log('setting link with no path, target=' + groups[dest])
             graph.links.push({
               source: groups[address],
               target: groups[dest],
@@ -53,7 +49,6 @@ class GraphController {
           }
         }
       }
-      console.log(graph)
 
       ctx.body = graph
     })

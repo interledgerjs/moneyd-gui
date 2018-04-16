@@ -1,5 +1,4 @@
 ;(async function () {
-  console.log('in load handler')
   const width = 960
   const height = 500
 
