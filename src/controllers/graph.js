@@ -12,21 +12,20 @@ class GraphController {
       const table = await this.admin.query('routing')
       const { address } = await this.admin.query('accounts')
       const graph = {
-        nodes: [ { name: address, group: 1 } ],
+        nodes: [],
         links: []
       }
 
-      let groupIndex = 1
-      const groups = {
-        [address]: 0
+      let groupIndex = 0
+      const groups = {}
+      for (const dest of Object.keys(table.localRoutingTable)) {
+        graph.nodes.push({ name: dest, group: groupIndex }) 
+        groups[dest] = groupIndex
+        groupIndex++
       }
 
       for (const dest of Object.keys(table.localRoutingTable)) {
         if (dest !== address) {
-          groups[dest] = groupIndex
-          graph.nodes.push({ name: dest, group: groupIndex }) 
-          groupIndex++
-
           const pathString = table.localRoutingTable[dest].path
           const path = pathString ? pathString.split(' ') : []
 
