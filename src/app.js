@@ -10,6 +10,7 @@ const Router = require('koa-router')
 const Parser = require('koa-bodyparser')
 const Views = require('koa-views')
 const path = require('path')
+const Riverpig = require('riverpig')
 
 class App {
   constructor (deps) {
@@ -21,6 +22,7 @@ class App {
     this.pubsub = deps(PubSub)
     this.graph = deps(Graph)
 
+    this.logger = Riverpig('moneyd-gui')
     this.router = Router()
     this.parser = Parser()
 
@@ -34,19 +36,23 @@ class App {
   async listen () {
     await this.errors.init(this.app)
 
+    this.logger.info('creating app')
     const server = this.app
       .use(this.parser)
       .use(this.views)
       .use(this.router.routes())
       .use(this.router.allowedMethods())
       .listen(process.env.PORT || 7770)
+    this.logger.info('listening on :' + (process.env.PORT || 7770))
 
+    this.logger.info('attaching endpoints and connecting to moneyd...')
     await this.pubsub.init(server)
     await this.index.init(this.router)
     await this.send.init(this.router)
     await this.ping.init(this.router)
     await this.graph.init(this.router)
     await this.receiver.init(this.router)
+    this.logger.info('moneyd-gui ready (republic attitude)')
   }
 }
 
