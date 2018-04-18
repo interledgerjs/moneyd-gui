@@ -1,19 +1,4 @@
 ;(async function () {
-  const width = 960
-  const height = 500
-
-  console.log('creating svg')
-  const svg = d3.select('#svg').append('svg')
-    .attr('width', width)
-    .attr('height', height)
-
-  console.log('creating force graph')
-  const force = d3.layout.force()
-    .gravity(0.05)
-    .distance(150)
-    .charge(-400)
-    .size([ width, height ])
-
   console.log('fetching graph data')
   const req = await fetch('/actions/graph')
 
@@ -24,46 +9,57 @@
   const json = await req.json()
   console.log('creating graph. json=', JSON.stringify(json, null, 2))
 
-  force
-    .nodes(json.nodes)
-    .links(json.links)
-    .start()
+  const width = 960
+  const height = 500
+  const maxLabelLength = 30
+  const fontSize = 12
 
-  const link = svg.selectAll('.link')
-    .data(json.links)
+  const tree = d3.layout.tree()
+    .sort(null)
+    .size([ height, width - 2 * maxLabelLength * fontSize ])
+    .children(d => {
+      return (!d.contents || d.contents.length === 0) ? null : d.contents
+    })
+
+  const nodes = tree.nodes(json)
+  const links = tree.links(nodes)
+
+  const layout = d3.select('#svg')
+    .append('svg:svg')
+      .attr('width', width)
+      .attr('height', height)
+    .append('svg:g')
+      .attr('class', 'container')
+      .attr('transform', `translate(${maxLabelLength * fontSize},0)`)
+
+  const link = d3.svg.diagonal()
+    .projection(d => {
+      return [d.y, d.x]
+    })
+
+  layout.selectAll('path.link')
+    .data(links)
     .enter()
-    .append('line')
-    .attr('class', 'link')
-    .style('stroke-width', d => Math.sqrt(d.weight))
+    .append('svg:path')
+      .attr('class', 'link')
+      .attr('d', link)
 
-  const node = svg.selectAll('.node')
-    .data(json.nodes)
+  const nodeGroup = layout.selectAll('g.node')
+    .data(nodes)
     .enter()
-    .append('g')
-    .attr('class', 'node')
-    .call(force.drag)
-
-  const radius = 5
-  node.append('circle')
-    .attr('r', radius)
-
-  node.append('text')
-    .attr('dx', 12)
-    .attr('dy', '0.35em')
-    .text(d => d.name)
-
-  force.on('tick', () => {
-    link
-      .attr('x1', d => d.source.x)
-      .attr('y1', d => d.source.y)
-      .attr('x2', d => d.target.x)
-      .attr('y2', d => d.target.y)
-
-    node
+    .append('svg:g')
+      .attr('class', 'node')
       .attr('transform', d => {
-        const nx = Math.max(radius, Math.min(width - radius, d.x))
-        const ny = Math.max(radius, Math.min(height - radius, d.y))
-        return `translate(${nx},${ny})`
+        return `translate(${d.y},${d.x})`
       })
-  })
+
+  nodeGroup.append('svg:text')
+    .attr('text-anchor', d => d.children ? 'end' : 'start')
+    .attr('dx', d => d.children ? -20 : 20)
+    .attr('dy', 3)
+    .text(d => {
+      return (d.name.length > maxLabelLength)
+        ? d.name.substring(0, 27) + '...'
+        : d.name
+    })
 })()

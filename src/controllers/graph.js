@@ -11,45 +11,35 @@ class GraphController {
     router.get('/actions/graph', async ctx => {
       const table = await this.admin.query('routing')
       const { address } = await this.admin.query('accounts')
-      const graph = {
-        nodes: [],
-        links: []
-      }
 
-      let groupIndex = 0
-      const groups = {}
-      for (const dest of Object.keys(table.localRoutingTable)) {
-        graph.nodes.push({ name: dest, group: groupIndex }) 
-        groups[dest] = groupIndex
-        groupIndex++
+      const mapTree = {
+        name: address,
+        contents: {}
       }
 
       for (const dest of Object.keys(table.localRoutingTable)) {
-        if (dest !== address) {
-          const pathString = table.localRoutingTable[dest].path
-          const path = pathString ? pathString.split(' ') : []
+        if (dest === address) continue
+        const pathStr = table.localRoutingTable[dest].path
+        const path = pathStr ? pathString.split(' ') : [ dest ]
 
-          if (path.length) {
-            let last = address
-            for (const hop of path) {
-              graph.links.push({
-                source: groups[last],
-                target: groups[hop],
-                weight: 1
-              })
-              last = hop
-            }
-          } else {
-            graph.links.push({
-              source: groups[address],
-              target: groups[dest],
-              weight: 1
-            })
+        let root = mapTree
+        for (const hop of path) {
+          if (!root.contents[hop]) {
+            root.contents[hop] = { name: hop, contents: [] }
           }
+
+          root = root.contents[hop]
         }
       }
 
-      ctx.body = graph
+      function mapTreeToListTree (root) {
+        return {
+          name: root.name,
+          contents: Object.values(root.contents).map(mapTreeToListTree)
+        }
+      }
+
+      ctx.body = mapTreeToListTree(mapTree)
     })
 
     router.get('/graph.js', async ctx => {
