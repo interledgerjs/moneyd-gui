@@ -9,9 +9,13 @@
   const json = await req.json()
   console.log('creating graph. json=', JSON.stringify(json, null, 2))
 
+  function findLongestLabel (json) {
+    return Math.max(json.name.length, ...json.contents.map(findLongestLabel))
+  }
+
   const width = 960
   const height = 500
-  const maxLabelLength = 30
+  const maxLabelLength = Math.min(30, findLongestLabel(json))
   const fontSize = 12
 
   const tree = d3.layout.tree()
