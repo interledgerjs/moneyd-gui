@@ -20,7 +20,7 @@ class GraphController {
       for (const dest of Object.keys(table.localRoutingTable)) {
         if (dest === address) continue
         const pathStr = table.localRoutingTable[dest].path
-        const path = pathStr ? pathString.split(' ') : [ dest ]
+        const path = pathStr ? pathStr.split(' ') : [ dest ]
 
         let root = mapTree
         for (const hop of path) {
