@@ -13,8 +13,10 @@
     return Math.max(json.name.length, ...json.contents.map(findLongestLabel))
   }
 
-  const width = 960
-  const height = 500
+  const div = document.getElementById('svg')
+  console.log(div.offsetWidth, div.offsetHeight)
+  const width = div.offsetWidth
+  const height = div.offsetHeight
   const maxLabelLength = Math.min(30, findLongestLabel(json))
   const fontSize = 12
 
