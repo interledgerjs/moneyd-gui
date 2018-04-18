@@ -57,13 +57,25 @@
         return `translate(${d.y},${d.x})`
       })
 
+  const radius = 5
+  const diameter = radius * 2
+
+  nodeGroup.append('svg:circle')
+    .attr('class', 'node-dot')
+    .attr('r', radius)
+
   nodeGroup.append('svg:text')
     .attr('text-anchor', d => d.children ? 'end' : 'start')
-    .attr('dx', d => d.children ? -20 : 20)
+    .attr('dx', d => d.children ? -diameter : diameter)
     .attr('dy', 3)
     .text(d => {
       return (d.name.length > maxLabelLength)
         ? d.name.substring(0, 27) + '...'
         : d.name
     })
+
+  d3.selectAll('.node-dot')
+    .style('fill', document.defaultView
+      .getComputedStyle(document.querySelector('#network span'))
+      .backgroundColor)
 })()
