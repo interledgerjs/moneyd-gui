@@ -25,7 +25,7 @@
     "ilp-packet": "^2.2.0",
     "ilp-plugin": "^3.1.0",
     "ilp-protocol-ildcp": "^1.0.0",
-    "ilp-protocol-psk2": "^0.2.0",
+    "ilp-protocol-psk2": "^0.2.1",
     "ilp-protocol-spsp": "^2.0.0",
     "koa": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
