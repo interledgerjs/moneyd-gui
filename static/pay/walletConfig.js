@@ -1,5 +1,5 @@
 ;(function () {
-  const SERVICE_WORKER_URL = 'http://localhost:7770/pay/sw-interledger.js'
+  const SERVICE_WORKER_URL = 'https://helpless-newt-29.localtunnel.me/pay/sw-interledger.js'
   // Adds the BobPay default instrument.
   function addInstruments (registration) {
     registration.paymentManager.userHint = 'test@bobpay.xyz'
@@ -101,7 +101,6 @@
   }
   if (unregisterWebPayment) {
     unregisterWebPayment.onclick = () => {
-      console.log("got in?")
       unregisterPaymentAppServiceWorker()
     }
   }

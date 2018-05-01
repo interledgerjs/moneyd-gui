@@ -2,12 +2,12 @@
   "name": "Pay with Interledger",
   "short_name": "Interledger",
   "icons": [{
-  	"src": "ilp_icon.png",
+  	"src": "./images/ilp_icon.png",
   	"sizes": "32x32",
   	"type": "image/png"
   }],
   "serviceworker": {
-    "src": "./sw-interledgerpay.js",
+    "src": "sw-interledger.js",
     "use_cache": false
   }
 }

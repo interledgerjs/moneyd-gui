@@ -7,23 +7,24 @@ self.addEventListener('canmakepayment', function (e) {
 
 self.addEventListener('paymentrequest', function (e) {
   payment_request_event = e
-  console.log('payment request sent', payment_request_event)
-  payment_request_resolver= new PromiseResolver()
+  payment_request_resolver = new PromiseResolver()
   e.respondWith(payment_request_resolver.promise)
   // The methodData here represents what the merchant supports. We could have a
   // payment selection screen, but for this simple demo if we see interledger in the list
   // we send the user through the interledger flow.
-  let url = 'http://localhost:7770/pay/interledger.html"'
-  if (e.methodData[0].supportedMethods[0].indexOf('interledger') !== -1) {
-    throw new Error('Interledger not supported')
+  let url = 'https://helpless-newt-29.localtunnel.me/pay/interledger.html'
+  if (e.methodData[0].supportedMethods[0].indexOf('interledger') === -1) {
+    alert('Interledger not supported')
   }
   e.openWindow(url)
     .then(windowClient => {
+      console.log('window client?', windowClient)
       if (windowClient === null) {
         payment_request_resolver.reject('Failed to open window')
       }
     })
     .catch(function (err) {
+      console.log('Whats the error')
       payment_request_resolver.reject(err)
     })
 })
@@ -66,7 +67,7 @@ function PromiseResolver () {
   /** @private {function(*=): void} */
   this.reject_
 
-  this.promise = new Promise(function (resolve, reject) {
+  this.promise_ = new Promise(function (resolve, reject) {
     this.resolve_ = resolve
     this.reject_ = reject
   }.bind(this))
