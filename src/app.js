@@ -5,10 +5,12 @@ const Graph = require('./controllers/graph')
 const Errors = require('./controllers/errors')
 const Receiver = require('./controllers/receiver')
 const PubSub = require('./lib/pubsub')
-const WalletConfig = require('./controllers/walletConfig')
+const Pay = require('./controllers/pay')
 const Koa = require('koa')
 const Router = require('koa-router')
 const Parser = require('koa-bodyparser')
+const mount = require('koa-mount')
+const serve = require('koa-static')
 const Views = require('koa-views')
 const path = require('path')
 const Riverpig = require('riverpig')
@@ -22,7 +24,7 @@ class App {
     this.receiver = deps(Receiver)
     this.pubsub = deps(PubSub)
     this.graph = deps(Graph)
-    this.walletConfig = deps(WalletConfig)
+    this.pay = deps(Pay)
 
     this.logger = Riverpig('moneyd-gui')
     this.router = Router()
@@ -40,6 +42,11 @@ class App {
 
     this.logger.info('creating app')
     const server = this.app
+      .use(async (ctx, next) => {
+        ctx.set('Link', '<http://localhost:8080/pay/manifest.json>; rel="payment-method-manifest"')
+        await next()
+      })
+      .use(mount('/pay', serve(path.resolve(__dirname, '../static/pay'))))
       .use(this.parser)
       .use(this.views)
       .use(this.router.routes())
@@ -53,8 +60,8 @@ class App {
     await this.send.init(this.router)
     await this.ping.init(this.router)
     await this.graph.init(this.router)
-    await this.walletConfig.init(this.router)
     await this.receiver.init(this.router)
+    await this.pay.init(this.router)
     this.logger.info('moneyd-gui ready (republic attitude)')
   }
 }

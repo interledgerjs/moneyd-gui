@@ -20,16 +20,28 @@
     "url": "https://github.com/sharafian/moneyd-gui/issues"
   },
   "homepage": "https://github.com/sharafian/moneyd-gui#readme",
+  "devDependencies": {
+    "eslint": "^4.19.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1"
+  },
   "dependencies": {
     "fs-extra": "^5.0.0",
     "ilp-packet": "^2.2.0",
     "ilp-plugin": "^3.1.0",
+    "ilp-plugin-payment-channel-framework": "github:interledgerjs/ilp-plugin-payment-channel-framework#bs-clp",
+    "ilp-plugin-xrp-escrow": "github:michielbdejong/ilp-plugin-xrp-escrow#72e4178",
     "ilp-protocol-ildcp": "^1.0.0",
     "ilp-protocol-psk2": "^0.2.1",
     "ilp-protocol-spsp": "^2.0.0",
     "koa": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
+    "koa-mount": "^3.0.0",
     "koa-router": "^7.4.0",
+    "koa-static": "^4.0.2",
     "koa-views": "^6.1.4",
     "node-fetch": "^2.1.2",
     "oer-utils": "^2.0.1",

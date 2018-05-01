@@ -7,22 +7,23 @@ self.addEventListener('canmakepayment', function (e) {
 
 self.addEventListener('paymentrequest', function (e) {
   payment_request_event = e
-
-  payment_request_event = new PromiseResolver()
-  e.responseWith(payment_request_resolver.promise)
+  console.log('payment request sent', payment_request_event)
+  payment_request_resolver= new PromiseResolver()
+  e.respondWith(payment_request_resolver.promise)
   // The methodData here represents what the merchant supports. We could have a
   // payment selection screen, but for this simple demo if we see interledger in the list
   // we send the user through the interledger flow.
-  let url = "./interledger-pay"
+  let url = 'http://localhost:7770/pay/interledger.html"'
   if (e.methodData[0].supportedMethods[0].indexOf('interledger') !== -1) {
     throw new Error('Interledger not supported')
   }
   e.openWindow(url)
-    .then(window_client => {
-      if (window_client === null)
+    .then(windowClient => {
+      if (windowClient === null) {
         payment_request_resolver.reject('Failed to open window')
+      }
     })
-    .catch (function (err) {
+    .catch(function (err) {
       payment_request_resolver.reject(err)
     })
 })
@@ -47,7 +48,7 @@ function sendPaymentRequest () {
   }
 
   clients.matchAll(options).then(function (clientList) {
-    for(let i = 0; i < clientList.length; i++) {
+    for (let i = 0; i < clientList.length; i++) {
       clientList[i].postMessage({
         paymentRequestId: payment_request_event.paymentRequestId,
         paymentRequestOrigin: payment_request_event.paymentRequestOrigin,
@@ -59,8 +60,10 @@ function sendPaymentRequest () {
 }
 
 function PromiseResolver () {
+  /** @private {function(T=): void} */
   this.resolve_
 
+  /** @private {function(*=): void} */
   this.reject_
 
   this.promise = new Promise(function (resolve, reject) {
@@ -72,12 +75,10 @@ function PromiseResolver () {
 PromiseResolver.prototype = {
   get promise () {
     return this.promise_
-  }
-
+  },
   get resolve () {
     return this.resolve_
-  }
-
+  },
   get reject () {
     return this.reject_
   }
