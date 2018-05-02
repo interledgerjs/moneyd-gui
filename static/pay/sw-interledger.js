@@ -23,7 +23,6 @@ self.addEventListener('paymentrequest', function (e) {
       }
     })
     .catch(function (err) {
-      console.log('Whats the error')
       payment_request_resolver.reject(err)
     })
 })

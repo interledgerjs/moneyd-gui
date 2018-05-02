@@ -1,5 +1,4 @@
 ;(function () {
-  console.log("window locatino", window.location.origin)
   const SERVICE_WORKER_URL = window.location.origin + '/pay/sw-interledger.js'
   // Adds the BobPay default instrument.
   function addInstruments (registration) {
