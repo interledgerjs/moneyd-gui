@@ -79,7 +79,7 @@
         window.close();
       }
 
-      details.innerHTML = "Sending payment to " + data.address;
+      details.innerHTML = "Sending payment to " + data.paymentPointer;
       payBtn.disabled = true;
 
       api.post('/pay/send-webpayment', Object.assign({

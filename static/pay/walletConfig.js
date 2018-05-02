@@ -1,8 +1,9 @@
 ;(function () {
-  const SERVICE_WORKER_URL = 'https://helpless-newt-29.localtunnel.me/pay/sw-interledger.js'
+  console.log("window locatino", window.location.origin)
+  const SERVICE_WORKER_URL = window.location.origin + '/pay/sw-interledger.js'
   // Adds the BobPay default instrument.
   function addInstruments (registration) {
-    registration.paymentManager.userHint = 'test@bobpay.xyz'
+    registration.paymentManager.userHint = 'test@interledgerpay.xyz'
     return Promise.all([
       registration.paymentManager.instruments.set(
         '5c077d7a-0a4a-4a08-986a-7fb0f5b08b13',

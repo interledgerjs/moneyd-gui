@@ -43,7 +43,6 @@ class App {
     this.logger.info('creating app')
     const server = this.app
       .use(async (ctx, next) => {
-        ctx.set('Link', '<https://helpless-newt-29.localtunnel.me/pay/manifest.json>; rel="payment-method-manifest"')
         await next()
       })
       .use(mount('/pay', serve(path.resolve(__dirname, '../static/pay'))))
