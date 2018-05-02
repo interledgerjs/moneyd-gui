@@ -1,6 +1,6 @@
 const fs = require('fs-extra')
 const path = require('path')
-const plugin = require('ilp-plugin')()
+const plugin = require('../plugin')
 const SPSP = require('ilp-protocol-spsp')
 
 function base64url (buf) {

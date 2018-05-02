@@ -12,13 +12,12 @@ self.addEventListener('paymentrequest', function (e) {
   // The methodData here represents what the merchant supports. We could have a
   // payment selection screen, but for this simple demo if we see interledger in the list
   // we send the user through the interledger flow.
-  let url = 'https://pink-mayfly-100.localtunnel.me/pay/interledger.html'
+  let url = 'https://rotten-insect-75.localtunnel.me/pay/interledger.html'
   if (e.methodData[0].supportedMethods[0].indexOf('interledger') === -1) {
     alert('Interledger not supported')
   }
   e.openWindow(url)
     .then(windowClient => {
-      console.log('window client?', windowClient)
       if (windowClient === null) {
         payment_request_resolver.reject('Failed to open window')
       }
