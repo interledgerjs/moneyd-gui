@@ -12,9 +12,9 @@ self.addEventListener('paymentrequest', function (e) {
   // The methodData here represents what the merchant supports. We could have a
   // payment selection screen, but for this simple demo if we see interledger in the list
   // we send the user through the interledger flow.
-  let url = 'https://rotten-insect-75.localtunnel.me/pay/interledger.html'
+  let url = 'http://localhost:7770/pay/interledger.html'
   if (e.methodData[0].supportedMethods[0].indexOf('interledger') === -1) {
-    alert('Interledger not supported')
+    window.alert('Interledger not supported')
   }
   e.openWindow(url)
     .then(windowClient => {
@@ -47,6 +47,8 @@ function sendPaymentRequest () {
   }
 
   clients.matchAll(options).then(function (clientList) {
+    console.log("clientList", clientList)
+    console.log(payment_request_event)
     for (let i = 0; i < clientList.length; i++) {
       clientList[i].postMessage({
         paymentRequestId: payment_request_event.paymentRequestId,
@@ -54,6 +56,7 @@ function sendPaymentRequest () {
         instrumentKey: payment_request_event.instrumentKey,
         methodData: payment_request_event.methodData
       })
+      // white list paymentRequestOrigin to always if below a certain amount
     }
   })
 }
