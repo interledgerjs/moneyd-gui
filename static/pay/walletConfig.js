@@ -161,6 +161,98 @@
     }
   };
 
+  function editWhitelistItem (domain, uniqueId, currency, capAmount) {
+    const editDiv = document.querySelector(`#display-item-${uniqueId} .edit`)
+    const editButton = document.querySelector(`#display-item-${uniqueId} .edit button`)
+    const currencyDiv = document.querySelector(`#display-item-${uniqueId} .currency`)
+    const currencyPara = document.querySelector(`#display-item-${uniqueId} .currency p`)
+    const valueDiv = document.querySelector(`#display-item-${uniqueId} .value`)
+    const valuePara = document.querySelector(`#display-item-${uniqueId} .value p`)
+    // Make currency and value a text box.
+    currencyPara.remove()
+    valuePara.remove()
+    const newCurrencyInput = document.createElement('input')
+    const newValueInput = document.createElement('input')
+    newCurrencyInput.className = 'form-control currency-input'
+    newCurrencyInput.value = currency
+    newValueInput.className = 'form-control value-input'
+    newValueInput.value = capAmount
+    newValueInput.type = 'number'
+
+    currencyDiv.appendChild(newCurrencyInput)
+    valueDiv.appendChild(newValueInput)
+
+    editDiv.className = 'done'
+    const newButton = editButton.cloneNode(true)
+    editDiv.replaceChild(newButton, editButton)
+    newButton.addEventListener('click', function () {
+      finishEditingItem(domain, uniqueId)
+    })
+    newButton.innerHTML = 'Done'
+  }
+
+  function revertDomElements (domain, uniqueId, newCurrency, newValue) {
+    const doneDiv = document.querySelector(`#display-item-${uniqueId} .done`)
+    const doneButton = document.querySelector(`#display-item-${uniqueId} .done button`)
+    const currencyDiv = document.querySelector(`#display-item-${uniqueId} .currency`)
+    const currencyInput = document.querySelector(`#display-item-${uniqueId} .currency input`)
+    const valueDiv = document.querySelector(`#display-item-${uniqueId} .value`)
+    const valueInput = document.querySelector(`#display-item-${uniqueId} .value input`)
+
+    currencyInput.remove()
+    valueInput.remove()
+
+    const newCurrencyPara = document.createElement('p')
+    const newValuePara = document.createElement('p')
+    newCurrencyPara.innerHTML = newCurrency
+    newValuePara.innerHTML = newValue
+    currencyDiv.appendChild(newCurrencyPara)
+    valueDiv.appendChild(newValuePara)
+
+    doneDiv.className = 'edit'
+    const newButton = doneButton.cloneNode(true)
+    doneDiv.replaceChild(newButton, doneButton)
+    newButton.addEventListener('click', function () {
+      editWhitelistItem(domain, uniqueId, newCurrency, newValue)
+    })
+    newButton.innerHTML = 'Edit'
+  }
+
+  function finishEditingItem (domain, uniqueId) {
+    const newCurrency = document.querySelector(`#display-item-${uniqueId} .currency .currency-input`).value
+    const newValue = document.querySelector(`#display-item-${uniqueId} .value .value-input`).value
+    if (!window.indexedDB) {
+      console.log('This browser does not support Indexed')
+    } else {
+      const request = window.indexedDB.open('walletConfig', 2)
+      request.onerror = function (event) {
+        console.log('Database error: ' + event.target.errorCode)
+      }
+      request.onsuccess = function () {
+        const db = request.result
+        const transaction = db.transaction(['whitelist'], 'readwrite')
+        const objStore = transaction.objectStore('whitelist')
+        // update new element
+        const index = objStore.index('domain')
+        const item = index.get(domain)
+        item.onsuccess = function () {
+          const data = item.result
+          data.currency = newCurrency
+          data.capAmount = newValue
+          console.log('new data', data)
+          const requestUpdate = objStore.put(data)
+          requestUpdate.onerror = function (event) {
+            console.log('Error', event.target.errorCode)
+          }
+          requestUpdate.onsuccess = function (event) {
+            console.log('new Update!', index.get(domain))
+            revertDomElements(domain, uniqueId, newCurrency, newValue)
+          }
+        }
+      }
+    }
+  }
+
   function displayWhitelist () {
     // Gather entries of everything in white list. Allow users to remove and change max payment.
     if (!window.indexedDB) {
@@ -192,9 +284,14 @@
             item.innerHTML = templateString
             domainContainer.appendChild(item)
             const removeElement = document.querySelector(`#display-item-${cursor.value.id} .remove button`)
+            const editElement = document.querySelector(`#display-item-${cursor.value.id} .edit button`)
             removeElement.onclick = function () {
               removeFromWhitelist(cursor.value.domain, cursor.value.id)
             }
+            const func = function startEditing () {
+              editWhitelistItem(cursor.value.domain, cursor.value.id, cursor.value.currency, cursor.value.capAmount)
+            }
+            editElement.onclick = func
             cursor.continue()
           } else {
             console.log('all entries finished')

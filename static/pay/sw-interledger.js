@@ -79,15 +79,16 @@ function sendPaymentRequest () {
           let objStore = transaction.objectStore('whitelist')
           let index = objStore.index('domain')
           let item = index.get(payment_request_event.paymentRequestOrigin)
-          console.log("item?", item)
-          if (item) {
-            let addRequest = objStore.put({
-              domain: payment_request_event.paymentRequestOrigin,
-              currency: 'USD',
-              capAmount: 15
-            })
-            addRequest.onsuccess = function (event) {
-              console.log('made it!', index.get(payment_request_event.paymentRequestOrigin))
+          item.onsuccess = function () {
+            if (!item.result) {
+              let addRequest = objStore.put({
+                domain: payment_request_event.paymentRequestOrigin,
+                currency: 'USD',
+                capAmount: 15
+              })
+              addRequest.onsuccess = function (event) {
+                console.log('made it!', index.get(payment_request_event.paymentRequestOrigin))
+              }
             }
           }
           transaction.oncomplete = function () {

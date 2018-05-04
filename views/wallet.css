@@ -12,3 +12,8 @@
 .edit {
   margin-right: 15px;
 }
+
+.done button, .done button:hover, .done button:active{
+  background: royalblue;
+  border-color: royalblue
+}
