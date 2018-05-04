@@ -1,3 +1,14 @@
 .whitelist-row {
   margin-top: 20px;
 }
+
+.item-row {
+  line-height: 40px;
+}
+.domain-header, .currency-header, .value-header {
+  font-weight: bold;
+}
+
+.edit {
+  margin-right: 15px;
+}
