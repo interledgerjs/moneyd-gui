@@ -44,12 +44,34 @@
 
       paymentRequestClient = e.source;
       paymentRequest = e.data;
+      const origin = paymentRequest.paymentRequestOrigin
       paymentRequest.methodData.forEach(function(paymentMethod) {
         if(paymentMethod.supportedMethods.includes('interledger')) {
           interledgerMethods.push(paymentMethod.data);
         }
       });
-
+      // Automatically pay to whitelist
+      if (!window.indexedDB) {
+        console.log('This browser does not support IndexedDB')
+      } else {
+        const request = window.indexedDB.open('walletConfig', 2)
+        request.onerror = function (event) {
+          console.log('Database error: ' + event.target.errorCode)
+        }
+        request.onsuccess = function () {
+          const db = request.result
+          const transaction = db.transaction(['whitelist'], 'readwrite')
+          const objStore = transaction.objectStore('whitelist')
+          const index = objStore.index('domain')
+          const item = index.get(origin)
+          item.onsuccess = function () {
+            if(item.result) {
+              // Automatically payout
+              pay()
+            }
+          }
+        }
+      }
       details.innerHTML = JSON.stringify(paymentRequest, undefined, 2);
     });
 
