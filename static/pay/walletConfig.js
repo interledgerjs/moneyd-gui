@@ -129,6 +129,26 @@
     </div>`
   };
 
+  function getNewItemTemplate () {
+    return `<div class="row item-row" id="new-list-item">
+        <div class="col-md-4 domain">
+          <input class="form-control" placeholder="E.g. https://www.amazon.com">
+        </div>
+        <div class="col-md-2 currency">
+          <input class="form-control" placeholder = "E.g. XRP">
+        </div>
+        <div class="col-md-2 value">
+          <input class="form-control" placeholder = "10">
+        </div>
+        <div class="col-md-1 done">
+          <button class="btn btn-primary">
+            Done
+          </button>
+        </div>
+    </div>
+    `
+  }
+
   function removeFromWhitelist (domain, uniqueId) {
     const listItem = document.querySelector(`#display-item-${uniqueId}`)
     if (!window.indexedDB) {
@@ -253,6 +273,77 @@
     }
   }
 
+  function finishAddingItem (domain, uniqueId, currency, value) {
+    const newListItem = document.querySelector('#new-list-item')
+    newListItem.remove()
+    const domainContainer = document.querySelector('#whitelist-items')
+    const htmlString = getWhitelistItemTemplate({
+      domain,
+      id: uniqueId,
+      currency,
+      capAmount: value
+    })
+    const newItem = document.createElement('div')
+    newItem.innerHTML = htmlString
+    domainContainer.appendChild(newItem)
+    console.log('domainContainer', domainContainer)
+    const removeElement = document.querySelector(`#display-item-${uniqueId} .remove button`)
+    const editElement = document.querySelector(`#display-item-${uniqueId} .edit button`)
+    removeElement.onclick = function () {
+      removeFromWhitelist(domain, uniqueId)
+    }
+    const func = function startEditing () {
+      editWhitelistItem(domain, uniqueId, currency, value)
+    }
+    editElement.onclick = func
+  }
+  function addWhitelistItem () {
+    const newListItem = document.querySelector('#new-list-item')
+
+    if (!newListItem) {
+      // Only add new if it's not already there.
+      const newItem = document.createElement('div')
+      newItem.innerHTML = getNewItemTemplate()
+      const domainContainer = document.querySelector('#whitelist-items')
+      domainContainer.appendChild(newItem)
+      const doneButton = document.querySelector('#new-list-item .done button')
+      doneButton.addEventListener('click', appendToDB)
+    }
+  }
+  function appendToDB () {
+    const newDomain = document.querySelector('#new-list-item .domain input').value
+    const newCurrency = document.querySelector('#new-list-item .currency input').value
+    const newValue = document.querySelector('#new-list-item .value input').value
+    const newListItem = document.querySelector('#new-list-item')
+
+    if (!window.indexedDB) {
+      console.log('This browser does not support IndexedDB')
+    } else {
+      const request = window.indexedDB.open('walletConfig', 2)
+      request.onerror = function (event) {
+        console.log('Database error: ' + event.target.errorCode)
+      }
+      request.onsuccess = function () {
+        const db = request.result
+        let transaction = db.transaction(['whitelist'], 'readwrite')
+        let objStore = transaction.objectStore('whitelist')
+        let addRequest = objStore.put({
+          domain: newDomain,
+          currency: newCurrency,
+          capAmount: newValue
+        })
+        addRequest.onsuccess = function (event) {
+          console.log('made it!', event.target.result)
+
+          finishAddingItem(newDomain, event.target.result, newCurrency, newValue)
+        }
+        transaction.oncomplete = function () {
+          db.close()
+        }
+      }
+    }
+  }
+
   function displayWhitelist () {
     // Gather entries of everything in white list. Allow users to remove and change max payment.
     if (!window.indexedDB) {
@@ -301,4 +392,6 @@
     }
   }
   displayWhitelist()
+  const addButton = document.querySelector('#add-item')
+  addButton.addEventListener('click', addWhitelistItem)
 })()
