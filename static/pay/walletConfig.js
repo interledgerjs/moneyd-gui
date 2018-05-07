@@ -384,7 +384,6 @@
             const func = function startEditing () {
               editWhitelistItem(domain, id, currency, capAmount)
             }
-            console.log('cursor', cursor, cursor.value.domain, cursor.value.currency, cursor.value.id)
             editElement.onclick = func.bind(cursor)
             cursor.continue()
           } else {
