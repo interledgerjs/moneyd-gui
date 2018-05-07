@@ -132,10 +132,10 @@
   function getNewItemTemplate () {
     return `<div class="row item-row" id="new-list-item">
         <div class="col-md-4 domain">
-          <input class="form-control" placeholder="E.g. https://www.amazon.com">
+          <input class="form-control" placeholder="https://www.amazon.com/">
         </div>
         <div class="col-md-2 currency">
-          <input class="form-control" placeholder = "E.g. XRP">
+          <input class="form-control" placeholder = "XRP">
         </div>
         <div class="col-md-2 value">
           <input class="form-control" placeholder = "10">
@@ -392,6 +392,17 @@
     }
   }
   displayWhitelist()
-  const addButton = document.querySelector('#add-item')
-  addButton.addEventListener('click', addWhitelistItem)
+  function initialise () {
+    const addButton = document.querySelector('#add-item')
+    addButton.addEventListener('click', addWhitelistItem)
+  }
+  window.onload = initialise()
+  // if (window.addEventListener) {
+  //   console.log('what')
+  //   window.addEventListener('load', initialise)
+  // } else if (window.attachEvent) {
+  //   window.attachEvent('onload', initialise)
+  // } else {
+  //   document.addEventListener('load', initialise)
+  // }
 })()

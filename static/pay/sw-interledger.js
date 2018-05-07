@@ -1,5 +1,5 @@
-let payment_request_event = undefined
-let payment_request_resolver = undefined
+let payment_request_event
+let payment_request_resolver
 
 self.addEventListener('canmakepayment', function (e) {
   e.responseWith(true)
@@ -8,7 +8,12 @@ self.addEventListener('canmakepayment', function (e) {
 self.addEventListener('paymentrequest', function (e) {
   payment_request_event = e
   payment_request_resolver = new PromiseResolver()
-  e.respondWith(payment_request_resolver.promise)
+  try {
+    e.respondWith(payment_request_resolver.promise)
+  } catch (e) {
+    console.log('error', e)
+  }
+
   // The methodData here represents what the merchant supports. We could have a
   // payment selection screen, but for this simple demo if we see interledger in the list
   // we send the user through the interledger flow.
