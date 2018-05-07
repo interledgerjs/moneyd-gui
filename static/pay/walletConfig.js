@@ -151,6 +151,7 @@
 
   function removeFromWhitelist (domain, uniqueId) {
     const listItem = document.querySelector(`#display-item-${uniqueId}`)
+    console.log('are we in?', listItem, uniqueId, domain)
     if (!window.indexedDB) {
       console.log('This browser does\'t support IndexedDB')
     } else {
@@ -374,15 +375,17 @@
             const item = document.createElement('div')
             item.innerHTML = templateString
             domainContainer.appendChild(item)
-            const removeElement = document.querySelector(`#display-item-${cursor.value.id} .remove button`)
-            const editElement = document.querySelector(`#display-item-${cursor.value.id} .edit button`)
+            let removeElement = document.querySelector(`#display-item-${cursor.value.id} .remove button`)
+            let editElement = document.querySelector(`#display-item-${cursor.value.id} .edit button`)
+            const {domain, id, currency, capAmount} = cursor.value
             removeElement.onclick = function () {
-              removeFromWhitelist(cursor.value.domain, cursor.value.id)
+              removeFromWhitelist(domain, id)
             }
             const func = function startEditing () {
-              editWhitelistItem(cursor.value.domain, cursor.value.id, cursor.value.currency, cursor.value.capAmount)
+              editWhitelistItem(domain, id, currency, capAmount)
             }
-            editElement.onclick = func
+            console.log('cursor', cursor, cursor.value.domain, cursor.value.currency, cursor.value.id)
+            editElement.onclick = func.bind(cursor)
             cursor.continue()
           } else {
             console.log('all entries finished')
