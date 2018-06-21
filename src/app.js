@@ -42,7 +42,7 @@ class App {
       .use(this.views)
       .use(this.router.routes())
       .use(this.router.allowedMethods())
-      .listen(process.env.PORT || 7770)
+      .listen(process.env.PORT || 7770, '127.0.0.1')
     this.logger.info('listening on :' + (process.env.PORT || 7770))
 
     this.logger.info('attaching endpoints and connecting to moneyd...')
