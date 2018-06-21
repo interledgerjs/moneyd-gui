@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sharafian/moneyd-gui.git"
+    "url": "git+https://github.com/interledgerjs/moneyd-gui.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sharafian/moneyd-gui/issues"
+    "url": "https://github.com/interledgerjs/moneyd-gui/issues"
   },
-  "homepage": "https://github.com/sharafian/moneyd-gui#readme",
+  "homepage": "https://github.com/interledgerjs/moneyd-gui#readme",
   "dependencies": {
     "fs-extra": "^5.0.0",
     "ilp-packet": "^2.2.0",

@@ -14,11 +14,6 @@ class ReceiverController {
       ctx.body = this.receiver.getPackets()
     })
 
-    router.get('/receive.js', async ctx => {
-      ctx.set('Content-Type', 'text/javascript')
-      ctx.body = await fs.readFile(path.resolve(__dirname, '../../static/receive.js'))
-    })
-
     router.get('/pay', async ctx => {
       const { destinationAccount, sharedSecret } = this.receiver.generateAddressAndSecret()
       ctx.body = {

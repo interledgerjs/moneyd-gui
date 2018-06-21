@@ -1,0 +1,19 @@
+script(src='/alerts.js')
+h2 Alerts
+br
+.table-responsive
+  table.table.table-striped.table-sm
+    thead
+      tr
+        th Peer
+        th Message
+        th Created at
+        th
+    tbody#alert-rows
+      each alert in alerts
+        tr(data-alert-id=alert.id)
+          td= alert.accountId
+          td= alert.message
+          td= alert.createdAt
+          td
+            button.btn.btn-danger.alert-dismiss(data-alert-id=alert.id) Dismiss

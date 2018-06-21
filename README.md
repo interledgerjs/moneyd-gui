@@ -11,7 +11,7 @@
 ## Usage
 
 ```sh
-git clone git@github.com:sharafian/moneyd-gui.git
+git clone git@github.com:interledgerjs/moneyd-gui.git
 cd moneyd-gui
 npm install
 npm start

@@ -35,6 +35,7 @@ body {
 .sidebar .nav-link {
   font-weight: 500;
   color: #333;
+  cursor: pointer;
 }
 
 .sidebar .nav-link .feather {

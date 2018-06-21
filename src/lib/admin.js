@@ -1,13 +1,14 @@
 const fetch = require('node-fetch')
 const ADMIN_API_PORT = process.env.ADMIN_API_PORT || 7769
-const ADMIN_URI = 'http://localhost:' + ADMIN_API_PORT + '/'
+const ADMIN_URI = 'http://localhost:' + ADMIN_API_PORT
 const ADMIN_COMMANDS = {
   status: true,
   routing: true,
   accounts: true,
   balance: true,
   rates: true,
-  stats: true
+  stats: true,
+  alerts: true
 }
 
 class Admin {
@@ -19,11 +20,25 @@ class Admin {
   }
 
   async query (command) {
-    const res = await fetch(ADMIN_URI + command, {
+    const res = await fetch(ADMIN_URI + '/' + command, {
       method: 'GET',
     })
 
     return res.json()
+  }
+
+  modifyBalance (balanceUpdate) {
+    return fetch(ADMIN_URI + '/balance', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(balanceUpdate)
+    })
+  }
+
+  deleteAlert (alertId) {
+    return fetch(ADMIN_URI + '/alerts/' + encodeURIComponent(alertId), {
+      method: 'DELETE'
+    })
   }
 }
 
