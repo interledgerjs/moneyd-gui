@@ -7,13 +7,17 @@ br
       tr
         th Peer
         th Message
+        th Count
         th Created at
+        th Updated at
         th
     tbody#alert-rows
       each alert in alerts
         tr(data-alert-id=alert.id)
           td= alert.accountId
           td= alert.message
+          td= alert.count
           td= alert.createdAt
+          td= alert.updatedAt
           td
             button.btn.btn-danger.alert-dismiss(data-alert-id=alert.id) Dismiss
