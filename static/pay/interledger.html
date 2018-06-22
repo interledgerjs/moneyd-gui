@@ -64,7 +64,6 @@
           const objStore = transaction.objectStore('whitelist')
           const index = objStore.index('domain')
           const item = index.get(origin)
-          console.log('item', item)
           item.onsuccess = function () {
             if(item.result) {
               // Automatically payout
@@ -79,21 +78,17 @@
                 let db = request.result
                 console.log('request result', request.result)
                 if (!db.objectStoreNames.contains('whitelist')) {
-                  console.log('created?')
                   let store = db.createObjectStore('whitelist', {keyPath: 'id', autoIncrement: true})
                   let index = store.createIndex('domain', 'domain', { unique: true })
                 }
               }
               request.onsuccess = function () {
                 let db = request.result
-                console.log('second request', request.result)
                 let transaction = db.transaction(['whitelist'], 'readwrite')
                 let objStore = transaction.objectStore('whitelist')
                 let index = objStore.index('domain')
-                console.log('paymentRequest', origin)
                 let item = index.get(origin)
                 item.onsuccess = function () {
-                  console.log("item success?", item)
                   if (!item.result) {
                     let addRequest = objStore.put({
                       domain: origin,
@@ -101,7 +96,7 @@
                       capAmount: 15
                     })
                     addRequest.onsuccess = function (event) {
-                      console.log('made it!', index.get(origin))
+                      console.log('Success putting %s into White list', index.get(origin))
                     }
                   }
                 }
