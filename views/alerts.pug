@@ -6,6 +6,7 @@ br
     thead
       tr
         th Peer
+        th Triggered by
         th Message
         th Count
         th Created at
@@ -15,6 +16,7 @@ br
       each alert in alerts
         tr(data-alert-id=alert.id)
           td= alert.accountId
+          td= alert.triggeredBy
           td= alert.message
           td= alert.count
           td= alert.createdAt
