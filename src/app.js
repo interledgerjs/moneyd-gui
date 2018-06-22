@@ -9,8 +9,6 @@ const Pay = require('./controllers/pay')
 const Koa = require('koa')
 const Router = require('koa-router')
 const Parser = require('koa-bodyparser')
-const mount = require('koa-mount')
-const serve = require('koa-static')
 const Views = require('koa-views')
 const path = require('path')
 const Riverpig = require('riverpig')
@@ -42,7 +40,6 @@ class App {
 
     this.logger.info('creating app')
     const server = this.app
-      .use(mount('/pay', serve(path.resolve(__dirname, '../static/pay'))))
       .use(this.parser)
       .use(this.views)
       .use(this.router.routes())
@@ -57,7 +54,7 @@ class App {
     await this.ping.init(this.router)
     await this.graph.init(this.router)
     await this.receiver.init(this.router)
-    await this.pay.init(this.router)
+    await this.pay.init(this.router, this.app)
     this.logger.info('moneyd-gui ready (republic attitude)')
   }
 }
