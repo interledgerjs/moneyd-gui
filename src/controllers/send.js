@@ -19,7 +19,7 @@ class SendController {
         query = await SPSP.query(receiver)
       } catch (e) {
         ctx.status = 400
-        ctx.body = e.stack 
+        ctx.body = e.stack
         return
       }
 
@@ -56,11 +56,6 @@ class SendController {
       }
 
       ctx.body = { success: true }
-    })
-
-    router.get('/send.js', async ctx => {
-      ctx.set('Content-Type', 'text/javascript')
-      ctx.body = await fs.readFile(path.resolve(__dirname, '../../static/send.js'))
     })
   }
 }

@@ -1,0 +1,24 @@
+script(src='/modify_balance.js')
+h1 Modify Peer Balance
+hr/
+.container
+  .row
+    .col-md-4.order-md-1
+      h4.mb-3 Balance Update Info
+      form#modify-balance-form.needs-validation(novalidate)
+        .row
+          .col-md-12.mb-3
+            label(for="modify-balance-accountId") Peer Account Id
+            select#modify-balance-accountId.form-control(required)
+              each accountId in accounts
+                option(value=accountId)= accountId
+            .invalid-feedback Valid peer account is required
+        .mb-3
+          label(for="modify-balance-amountDiff") Amount Diff (positive or negative)
+          input#modify-balance-amountDiff.form-control(type="text" required)
+          .invalid-feedback Valid amount is required
+        hr.mb-3
+        .mb-3
+          button#modify-balance-submit.btn.btn-primary.btn-lg.btn-block Send
+    .col-md-8.order-md-2.overflow-hidden
+      div#modify-balance-result
