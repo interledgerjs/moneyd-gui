@@ -1,4 +1,4 @@
-const plugin = require('../plugin')
+const plugin = require('ilp-plugin')()
 const SPSP = require('ilp-protocol-spsp')
 const mount = require('koa-mount')
 const serve = require('koa-static')
