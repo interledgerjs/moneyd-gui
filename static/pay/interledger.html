@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#db5945">
+    <title>You are paying with Interledger</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="/css/new-age.min.css" rel="stylesheet">
+    <script src="./api.js"></script>
+  </head>
+
+  <body>
+      <div class="container">
+          <h1>You are paying with Interledger</h1>
+
+          <pre style="white-space: pre-wrap;" id="details"></pre>
+      </div>
+
+      <div class="container">
+        <button id="pay" type="button" class="btn btn-primary" onclick="pay()">Pay</button>
+        <button id="cancel" type="button" class="btn btn-default" onclick="cancel()">Cancel</button>
+      </div>
+
+    <script>
+    let paymentRequestClient;
+    let paymentRequest;
+
+    const interledgerMethods = [];
+    const details = document.getElementById('details');
+    const payBtn = document.getElementById('pay');
+    const cancelBtn = document.getElementById('cancel');
+
+    navigator.serviceWorker.addEventListener('message', e => {
+
+      paymentRequestClient = e.source;
+      paymentRequest = e.data;
+      const origin = paymentRequest.paymentRequestOrigin
+      paymentRequest.methodData.forEach(function(paymentMethod) {
+        if(paymentMethod.supportedMethods.includes('interledger')) {
+          interledgerMethods.push(paymentMethod.data);
+        }
+      });
+      // Automatically pay to whitelist
+      if (!window.indexedDB) {
+        console.log('This browser does not support IndexedDB')
+      } else {
+        const request = window.indexedDB.open('walletConfig', 2)
+        request.onerror = function (event) {
+          console.log('Database error: ' + event.target.errorCode)
+        }
+        request.onsuccess = function () {
+          const db = request.result
+          const transaction = db.transaction(['whitelist'], 'readwrite')
+          const objStore = transaction.objectStore('whitelist')
+          const index = objStore.index('domain')
+          const item = index.get(origin)
+          item.onsuccess = function () {
+            if(item.result) {
+              // Automatically payout
+              pay()
+            } else {
+              // white list paymentRequestOrigin to always if below a certain amount. Default to be below default 15 USD?
+              let request = indexedDB.open('walletConfig', 2)
+              request.onerror = function (event) {
+                console.log('Database error: ' + event.target.errorCode)
+              }
+              request.onupgradeneeded = function () {
+                let db = request.result
+                console.log('request result', request.result)
+                if (!db.objectStoreNames.contains('whitelist')) {
+                  let store = db.createObjectStore('whitelist', {keyPath: 'id', autoIncrement: true})
+                  let index = store.createIndex('domain', 'domain', { unique: true })
+                }
+              }
+              request.onsuccess = function () {
+                let db = request.result
+                let transaction = db.transaction(['whitelist'], 'readwrite')
+                let objStore = transaction.objectStore('whitelist')
+                let index = objStore.index('domain')
+                let item = index.get(origin)
+                item.onsuccess = function () {
+                  if (!item.result) {
+                    let addRequest = objStore.put({
+                      domain: origin,
+                      currency: 'USD',
+                      capAmount: 15
+                    })
+                    addRequest.onsuccess = function (event) {
+                      console.log('Success putting %s into White list', index.get(origin))
+                    }
+                  }
+                }
+                transaction.oncomplete = function () {
+                  db.close()
+                }
+              }
+
+            }
+          }
+        }
+      }
+      details.innerHTML = JSON.stringify(paymentRequest, undefined, 2);
+    });
+
+    navigator.serviceWorker.controller.postMessage('payment_app_window_ready');
+
+    function pay() {
+      if(!paymentRequestClient) {
+        console.error("No parent to communicate result back to.")
+        return;
+      }
+
+      let data;
+
+      //Get Interledger data
+      paymentRequest.methodData.forEach(function(element) {
+        if(element.supportedMethods.includes('interledger')) {
+          data = element.data;
+        }
+      });
+
+      if(!data) {
+        paymentRequestClient.postMessage({
+          error: {
+            message: "No Interledger payment method data found."
+          }
+        });
+        window.close();
+      }
+
+      details.innerHTML = "Sending payment to " + data.paymentPointer;
+      payBtn.disabled = true;
+
+      api.post('/pay/send-webpayment', Object.assign({
+          paymentRequestId: paymentRequest.paymentRequestId
+        }, data))
+      .then((respData) => {
+        details.innerHTML += "\nResponse:"
+          JSON.stringify(respData,undefined, 2);
+          if(paymentRequestClient){
+            paymentRequestClient.postMessage({
+              methodName: `interledger`,
+              details: respData
+            });
+          }
+          // window.close();
+          setTimeout(window.close, 5000);
+      }).catch((error) => {
+          details.innerHTML += error.stack;
+      });
+    }
+
+    function cancel() {
+      if(paymentRequestClient){
+        paymentRequestClient.postMessage({
+          error: {
+            message: "User Cancelled"
+          }
+        });
+      }
+
+      window.close();
+    }
+
+    </script>
+  </body>
+</html>

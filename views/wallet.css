@@ -1,0 +1,33 @@
+.whitelist-row {
+  margin-top: 20px;
+}
+.header-row {
+  margin-bottom: 10px
+}
+.item-row {
+  line-height: 40px;
+}
+.domain-header, .currency-header, .value-header {
+  font-weight: bold;
+}
+
+.edit {
+  margin-right: 15px;
+}
+
+.done button, .done button:hover, .done button:active{
+  background: royalblue;
+  border-color: royalblue
+}
+
+#add-item {
+  color: royalblue;
+  border: 1px dashed;
+  border-radius: 50%;
+  font-size: 15px;
+  padding: 4px;
+  cursor: pointer;
+  padding-left: 5px;
+  padding-right: 5px;
+  box-sizing: content-box;
+}

@@ -5,6 +5,7 @@ const Graph = require('./controllers/graph')
 const Errors = require('./controllers/errors')
 const Receiver = require('./controllers/receiver')
 const PubSub = require('./lib/pubsub')
+const Pay = require('./controllers/pay')
 const Koa = require('koa')
 const Router = require('koa-router')
 const Parser = require('koa-bodyparser')
@@ -21,6 +22,7 @@ class App {
     this.receiver = deps(Receiver)
     this.pubsub = deps(PubSub)
     this.graph = deps(Graph)
+    this.pay = deps(Pay)
 
     this.logger = Riverpig('moneyd-gui')
     this.router = Router()
@@ -52,6 +54,7 @@ class App {
     await this.ping.init(this.router)
     await this.graph.init(this.router)
     await this.receiver.init(this.router)
+    await this.pay.init(this.router, this.app)
     this.logger.info('moneyd-gui ready (republic attitude)')
   }
 }

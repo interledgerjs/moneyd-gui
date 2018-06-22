@@ -24,7 +24,7 @@ class IndexController {
 
     router.get('/actions/index/my_address', async ctx => {
       const { address } = await this.admin.query('accounts')
-      ctx.body = { address } 
+      ctx.body = { address }
     })
 
     router.get('/api/modify_balance', async (ctx) => {

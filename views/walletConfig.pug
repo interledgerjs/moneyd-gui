@@ -1,0 +1,29 @@
+script(src="/pay/walletConfig.js")
+|<style>
+include wallet.css
+|</style>
+h1 Wallet Configuration
+hr/
+.container
+  .row
+    .col-md-8.order-md-1
+      h4 Web payment
+      p Gives you a smooth checkout experience through Interledger!
+      button#enable-webpayments.btn.btn-secondary
+        | Enable Web Payments
+  .row.whitelist-row
+    .col-md-10.order-md-1
+      h4 Whitelist
+      p The list of domains which let you will automatically pay out to on checkout below a chosen amount.
+      .container
+        .row.header-row
+          .col-md-4
+            p.domain-header Domains
+          .col-md-2
+            p.currency-header Currency
+          .col-md-3
+            p.value-header Cap amount
+          .col-md-3
+            span#add-item
+              i.fas.fa-plus
+      .container#whitelist-items

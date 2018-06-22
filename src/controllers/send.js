@@ -6,9 +6,6 @@ const ILDCP = require('ilp-protocol-ildcp')
 const SPSP = require('ilp-protocol-spsp')
 
 class SendController {
-  constructor (deps) {
-  }
-
   async init (router) {
     await plugin.connect()
 
@@ -33,7 +30,7 @@ class SendController {
         ctx.body = await ILDCP.fetch(plugin.sendData.bind(plugin))
       } catch (e) {
         ctx.status = 400
-        ctx.body = e.stack 
+        ctx.body = e.stack
       }
     })
 
