@@ -30,6 +30,7 @@
 
   function registerPaymentAppServiceWorker () {
     navigator.serviceWorker.register(SERVICE_WORKER_URL).then(function (registration) {
+      console.log('registration', registration)
       if (!registration.paymentManager) {
         registration.unregister().then((success) => {})
         console.log('Payment app capability not present. Enable flags?')
@@ -70,16 +71,13 @@
     }
   })
   function showBobPayStatus (enabled) {
-    var buttonText = enabled ?
-      'Enabled' : 'Enable Web Payments'
-    var id = enabled ?
-      'enable-webpayments' : 'webpayments-enabled'
+    var buttonText = enabled ? 'Enabled' : 'Enable Web Payments'
+    var id = enabled ? 'enable-webpayments' : 'webpayments-enabled'
     const webPaymentButton = document.getElementById(id)
     webPaymentButton.onclick = function () {
       return false
     }
-    webPaymentButton.id = enabled ?
-      'webpayments-enabled' : 'enable-webpayments'
+    webPaymentButton.id = enabled ? 'webpayments-enabled' : 'enable-webpayments'
     webPaymentButton.innerHTML = buttonText
     if (enabled) {
       webPaymentButton.onclick = () => {
@@ -104,7 +102,7 @@
       unregisterPaymentAppServiceWorker()
     }
   }
-  function getWhitelistItemTemplate(cursor) {
+  function getWhitelistItemTemplate (cursor) {
     const uniqueId = `display-item-${cursor.id}`
     return `<div class="row item-row" id="${uniqueId}">
               <div class="col-md-4 domain">
@@ -151,7 +149,6 @@
 
   function removeFromWhitelist (domain, uniqueId) {
     const listItem = document.querySelector(`#display-item-${uniqueId}`)
-    console.log('are we in?', listItem, uniqueId, domain)
     if (!window.indexedDB) {
       console.log('This browser does\'t support IndexedDB')
     } else {
@@ -315,7 +312,6 @@
     const newDomain = document.querySelector('#new-list-item .domain input').value
     const newCurrency = document.querySelector('#new-list-item .currency input').value
     const newValue = document.querySelector('#new-list-item .value input').value
-    const newListItem = document.querySelector('#new-list-item')
 
     if (!window.indexedDB) {
       console.log('This browser does not support IndexedDB')
@@ -359,7 +355,7 @@
         let db = request.result
         if (!db.objectStoreNames.contains('whitelist')) {
           let store = db.createObjectStore('whitelist', {keyPath: 'id', autoIncrement: true})
-          let index = store.createIndex('domain', 'domain', { unique: true })
+          store.createIndex('domain', 'domain', { unique: true })
         }
       }
 

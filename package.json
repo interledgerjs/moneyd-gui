@@ -33,8 +33,6 @@
     "idb": "^2.1.1",
     "ilp-packet": "^2.2.0",
     "ilp-plugin": "^3.1.0",
-    "ilp-plugin-payment-channel-framework": "github:interledgerjs/ilp-plugin-payment-channel-framework#bs-clp",
-    "ilp-plugin-xrp-escrow": "github:michielbdejong/ilp-plugin-xrp-escrow#72e4178",
     "ilp-protocol-ildcp": "^1.0.0",
     "ilp-protocol-psk2": "^0.2.1",
     "ilp-protocol-spsp": "^2.0.0",

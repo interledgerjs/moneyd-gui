@@ -4,7 +4,7 @@ html
     script(defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous")
     script(src='http://d3js.org/d3.v2.min.js?2.9.3')
     link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous")
-    link(rel="manifest" href="https://raw.githubusercontent.com/andywong418/moneyd-gui/master/static/pay/manifest.json")
+    link(rel="manifest" href="/pay/manifest.json")
     |<style>
     include dashboard.css
     |</style>
@@ -40,7 +40,7 @@ html
                   span &nbsp; Receive
               li.nav-item
                 a.nav-link(onclick="load_view('walletConfig')")
-                  span.fas.fa-tablet(data-fa-transform="rotate--90")
+                  span.fas.fa-balance-scale(data-fa-transform="rotate--90")
                   span &nbsp; Wallet Config
             h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted Information
             ul.nav.flex-column

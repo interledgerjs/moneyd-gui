@@ -42,9 +42,6 @@ class App {
 
     this.logger.info('creating app')
     const server = this.app
-      .use(async (ctx, next) => {
-        await next()
-      })
       .use(mount('/pay', serve(path.resolve(__dirname, '../static/pay'))))
       .use(this.parser)
       .use(this.views)
