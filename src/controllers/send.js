@@ -54,11 +54,6 @@ class SendController {
 
       ctx.body = { success: true }
     })
-
-    router.get('/send.js', async ctx => {
-      ctx.set('Content-Type', 'text/javascript')
-      ctx.body = await fs.readFile(path.resolve(__dirname, '../../static/send.js'))
-    })
   }
 }
 

@@ -28,11 +28,6 @@ class PingController {
 
       ctx.body = { success: true }
     })
-
-    router.get('/ping.js', async ctx => {
-      ctx.set('Content-Type', 'text/javascript')
-      ctx.body = await fs.readFile(path.resolve(__dirname, '../../static/ping.js'))
-    })
   }
 }
 

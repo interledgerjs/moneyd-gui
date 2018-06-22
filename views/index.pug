@@ -1,8 +1,8 @@
 html
   head
     meta(charset="utf-8")
-    script(defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous")
-    script(src='http://d3js.org/d3.v2.min.js?2.9.3')
+    script(defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous")
+    script(src='https://d3js.org/d3.v2.min.js?2.9.3')
     link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous")
     link(rel="manifest" href="/pay/manifest.json")
     |<style>
@@ -40,8 +40,11 @@ html
                   span &nbsp; Receive
               li.nav-item
                 a.nav-link(onclick="load_view('walletConfig')")
-                  span.fas.fa-balance-scale(data-fa-transform="rotate--90")
+                  span.fas.fa-wallet
                   span &nbsp; Wallet Config
+                a.nav-link(onclick="load_view('modify_balance')")
+                  span.fas.fa-balance-scale
+                  span &nbsp; Update balance
             h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted Information
             ul.nav.flex-column
               li.nav-item
@@ -72,4 +75,8 @@ html
                 a#stats.nav-link(onclick="load_view('stats')")
                   span.fas.fa-chart-bar
                   span &nbsp; Statistics
+              li.nav-item
+                a#stats.nav-link(onclick="load_view('alerts')")
+                  span.fas.fa-exclamation-triangle
+                  span &nbsp; Alerts
         main#main.col-md-9.ml-sm-auto.col-lg-10.pt-3.px-4(role="main")

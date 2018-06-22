@@ -41,11 +41,6 @@ class GraphController {
 
       ctx.body = mapTreeToListTree(mapTree)
     })
-
-    router.get('/graph.js', async ctx => {
-      ctx.set('Content-Type', 'text/javascript')
-      ctx.body = await fs.readFile(path.resolve(__dirname, '../../static/graph.js'))
-    })
   }
 }
 

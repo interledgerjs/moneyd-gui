@@ -1,6 +1,6 @@
 {
   "name": "moneyd-gui",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,22 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sharafian/moneyd-gui.git"
+    "url": "git+https://github.com/interledgerjs/moneyd-gui.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sharafian/moneyd-gui/issues"
+    "url": "https://github.com/interledgerjs/moneyd-gui/issues"
   },
-  "homepage": "https://github.com/sharafian/moneyd-gui#readme",
-  "devDependencies": {
-    "eslint": "^4.19.0",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-import": "^2.9.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.7.0",
-    "eslint-plugin-standard": "^3.0.1"
-  },
+  "homepage": "https://github.com/interledgerjs/moneyd-gui#readme",
   "dependencies": {
     "fs-extra": "^5.0.0",
     "idb": "^2.1.1",
