@@ -1,27 +1,21 @@
 h2 Statistics
 br
-h5.text-muted Counters
-.table-responsive
-  table.table.table-striped.table-sm
-    thead
-      tr
-        th Counter Name
-        th Value
-    tbody
-      each val, index in counters
-        tr
-          td= index
-          td= val
-br
-h5.text-muted Meters
-.table-responsive
-  table.table.table-striped.table-sm
-    thead
-      tr
-        th Meter Name
-        th Value
-    tbody
-      each val, index in meters
-        tr
-          td= index
-          td= val
+each metric in locals
+  h5.text-muted= metric.name
+  h6.text-muted= metric.help
+    if metric.values.length > 0
+      .table-responsive
+      table.table.table-striped.table-sm
+        thead
+          tr
+            each key in Object.keys(metric.values[0].labels)
+              th= key
+            th Value
+        tbody
+          each val in metric.values
+            tr
+              each label in Object.values(val.labels)
+                td=label
+              td= val.value
+    else
+      p No Data
