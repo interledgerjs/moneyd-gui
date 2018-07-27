@@ -53,7 +53,7 @@ class Ping {
     const parsedPacket = IlpPacket.deserializeIlpPacket(result)
     if (parsedPacket.type !== IlpPacket.Type.TYPE_ILP_FULFILL) {
       throw new Error('Error sending ping. code=' + parsedPacket.data.code +
-        ' message=' + parsedPacket.data.message)
+        ' message=' + parsedPacket.data.message + ' triggeredBy=' + parsedPacket.data.triggeredBy)
     }
   }
 }
