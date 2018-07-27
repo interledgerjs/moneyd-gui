@@ -68,14 +68,14 @@
         setPingingFailure()
         setStatusCard(`
           <h4 class="text-danger">Ping Error</h4>
-          <pre style="overflow-x: hidden"><code class="text-danger">${ json.stack }</code></pre>
+          <pre style="white-space: pre-wrap;"><code class="text-danger">${ json.stack }</code></pre>
         `)
       }
     } catch (e) {
       setPingingFailure()
       setStatusCard(`
         <h4 class="text-danger">Ping Error</h4>
-        <pre style="overflow-x: hidden"><code class="text-danger">${ e.stack }</code></pre>
+        <pre style="white-space: pre-wrap;"><code class="text-danger">${ e.stack }</code></pre>
       `)
     }
 
