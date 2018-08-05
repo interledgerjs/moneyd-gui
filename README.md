@@ -30,6 +30,7 @@ Then go to [localhost:7770](http://localhost:7770) in your browser.
 
 ## TODOs
 
+- [ ] send a request(invitation) to connect to the connector via the moneyd-gui interface
 - [ ] CORS
 - [x] live update on receiver page
 - [ ] live update on balances
