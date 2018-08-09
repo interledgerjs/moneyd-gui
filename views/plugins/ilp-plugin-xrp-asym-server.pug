@@ -1,0 +1,60 @@
+hr/
+script(src='/ilp-plugin-xrp-asym-server.js')
+h2 ILP Plugin XRP Asym Server
+br
+h5.text-muted Overview
+.table-responsive
+  table.table.table-striped.table-sm
+    thead
+      tr
+        th Field
+        th
+        th Value
+    tbody
+      tr
+        td XRP Address
+        td
+        td= info.xrpAddress
+      tr
+        td XRP Balance
+        td Total
+        td= info.xrpBalance.total
+      tr
+        td
+        td Reserved
+        td= info.xrpBalance.reserved
+      tr
+        td
+        td Available
+        td= info.xrpBalance.available
+h5.text-muted Settlement Amount
+input.form-control#settle-amount(type='text', value='0.020000', pattern='[0-9]*\.?[0-9]+')
+hr/
+h5.text-muted Clients
+.table-responsive
+  table.table.table-striped.table-sm
+    thead
+      tr
+        th Account
+        th XRP Address
+        th(title='Channel from client to server') Channel
+        th(title='Channel balance') Balance
+        th(title='Channel from server to client') Client Channel
+        th(title='Client channel balance') Balance
+        th
+        th State
+        th
+    tbody
+      each client in info.clients
+        tr
+          td(title=client.account)= client.account.substring(0, 15)
+          td= client.xrpAddress
+          td(title=client.channel)= client.channel.substring(0, 6)
+          td= client.channelBalance
+          td(title=client.clientChannel)= client.clientChannel.substring(0, 6)
+          td= client.clientChannelBalance
+          td
+            button.btn.btn-secondary(id='settle:' + client.account) Settle
+          td= client.state
+          td
+            button.btn.btn-danger(id='block:' + client.block) Block

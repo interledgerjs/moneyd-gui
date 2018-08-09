@@ -1,0 +1,14 @@
+script(src='/plugin_admin.js')
+h1 Plugin Admin Interface
+hr/
+.row
+  .col-md-4.order-md-1
+    form#plugin-admin-form.needs-validation(novalidate)
+      .row
+        .col-md-12.mb-3
+          label(for="plugin-admin-account") Account Id
+          select#plugin-admin-account.form-control(required)
+            each accountId in accounts
+              option(value=accountId)= accountId
+          .invalid-feedback Account is required
+div#plugin-admin-info
