@@ -24,6 +24,20 @@ class Admin {
       method: 'GET',
     })
 
+    if (!res.ok) {
+      throw new Error(await res.text())
+    }
+
+    return res.json()
+  }
+
+  async sendAccountAdminInfo (account, info) {
+    const res = await fetch(ADMIN_URI + '/accounts/' + account, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(info)
+    })
+
     return res.json()
   }
 

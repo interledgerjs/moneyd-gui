@@ -7,6 +7,8 @@ const staticJS = [
   'graph.js',
   'index.js',
   'modify_balance.js',
+  'plugin_admin.js',
+  'plugins/ilp-plugin-xrp-asym-server.js',
   'ping.js',
   'receive.js',
   'send.js'
@@ -33,6 +35,39 @@ class IndexController {
         accounts: Object.keys(accountData.accounts)
       }
       await ctx.render('modify_balance', locals)
+    })
+
+    router.get('/api/plugin_admin/:account', async (ctx) => {
+      const account = ctx.params.account
+      const locals = await this.admin.query('accounts/' + account)
+      
+      console.log(path.join(
+        __dirname,
+        '../../views/plugins/' + locals.plugin))
+      if (await fs.exists(path.join(
+        __dirname,
+        '../../views/plugins/' + locals.plugin + '.pug'))) {
+        await ctx.render('plugins/' + locals.plugin, locals)
+      } else {
+        console.log('RENDER DEFAULTS')
+        await ctx.render('plugins/default', locals)
+      }
+    })
+
+    router.post('/api/plugin_admin/:account', async (ctx) => {
+      const account = ctx.params.account
+      const result = await this.admin
+        .sendAccountAdminInfo(account, ctx.request.body)
+
+      ctx.body = result
+    })
+
+    router.get('/api/plugin_admin', async (ctx) => {
+      const accountData = await this.admin.query('accounts')
+      const locals = {
+        accounts: Object.keys(accountData.accounts)
+      }
+      await ctx.render('plugin_admin', locals)
     })
 
     router.get('/api/:command', async ctx => {
