@@ -1,4 +1,7 @@
 # Moneyd GUI
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/interledgerjs/moneyd-gui.svg)](https://greenkeeper.io/)
+
 > A GUI for Moneyd
 
 - [Usage](#usage)
