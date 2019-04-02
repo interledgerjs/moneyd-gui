@@ -40,6 +40,8 @@ class Receiver {
         })
       })
     })
+
+    await this.receiver.listen()
   }
 }
 

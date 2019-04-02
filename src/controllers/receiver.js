@@ -23,6 +23,7 @@ class ReceiverController {
           name: 'Moneyd GUI'
         }
       }
+      ctx.set('content-type', 'application/spsp4+json')
     })
   }
 }
