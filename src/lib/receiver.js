@@ -1,4 +1,4 @@
-const { createReceiver } = require('ilp-protocol-psk2')
+const { Server } = require('ilp-protocol-stream')
 const makePlugin = require('ilp-plugin')
 const PubSub = require('./pubsub')
 
@@ -21,23 +21,25 @@ class Receiver {
 
   async listen () {
     await this.plugin.connect()
-    this.receiver = await createReceiver({
-      plugin: this.plugin,
-      paymentHandler: async params => {
-        const packet = {
-          date: new Date().toISOString(),
-          amount: params.prepare.amount,
-          id: params.id.toString('hex')
-        }
 
-        this.packets.unshift(packet)
-        this.pubsub.publish('receive:packet', packet)
-
-        await new Promise(resolve => setImmediate(resolve))
-        return params.accept()
-      }
+    this.receiver = new Server({
+      plugin: this.plugin
     })
 
+    this.receiver.on('connection', conn => {
+      conn.on('stream', stream => {
+        stream.setReceiveMax(2 ** 55)
+        stream.on('money', amount => {
+          const packet = {
+            date: new Date().toISOString(),
+            amount
+          }
+
+          this.packets.unshift(packet)
+          this.pubsub.publish('receive:packet', packet)
+        })
+      })
+    })
   }
 }
 

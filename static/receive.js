@@ -10,15 +10,12 @@
   function createRow (packet) {
     const row = document.createElement('tr')
     const date = document.createElement('td')
-    const id = document.createElement('td')
     const amount = document.createElement('td')
 
     date.innerHTML = packet.date
-    id.innerHTML = packet.id
     amount.innerHTML = packet.amount
 
     row.appendChild(date)
-    row.appendChild(id)
     row.appendChild(amount)
     return row
   }
