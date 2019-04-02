@@ -7,6 +7,7 @@
 - [More Screenshots](#more-screenshots)
 
 ![Status Page](./screenshots/status.png)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Finterledgerjs%2Fmoneyd-gui.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Finterledgerjs%2Fmoneyd-gui?ref=badge_shield)
 
 ## Usage
 
@@ -69,3 +70,7 @@ _The network graph is a visualization of your node's routing table. It doesn't
 represent a complete view of the network._
 
 ![Network Graph](./screenshots/graph.png)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Finterledgerjs%2Fmoneyd-gui.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Finterledgerjs%2Fmoneyd-gui?ref=badge_large)
